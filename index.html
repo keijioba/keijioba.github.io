@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOAC Conversation Cards Selector</title>
+    <style>
+        :root {
+            --bg-color: #0b0c10;
+            --card-color: #1f2833;
+            --accent-gold: #c5a880;
+            --text-main: #ffffff;
+            --text-muted: #c5c6c7;  
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 90vh;
+        }
+
+        header {
+            margin-top: 15px;
+        }
+
+        header h1 {
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            margin: 0 0 5px 0;
+        }
+
+        header p {
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .card-display {
+            background-color: var(--card-color);
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            box-sizing: border-box;
+            border: 1px solid rgba(197, 168, 128, 0.15);
+            position: relative;
+            transition: transform 0.1s ease;
+        }
+
+        .level-badge {
+            position: absolute;
+            top: 25px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-gold);
+            font-weight: bold;
+            opacity: 0.8;
+        }
+
+        .question-text {
+            font-size: 1.35rem;
+            line-height: 1.6;
+            font-weight: 500;
+            color: var(--text-main);
+            margin: 0;
+            word-wrap: break-word;
+            max-height: 65%;
+            overflow-y: auto;
+        }
+
+        .attribution {
+            position: absolute;
+            bottom: 25px;
+            font-size: 0.75rem;
+            font-style: italic;
+            color: var(--text-muted);
+            opacity: 0.7;
+        }
+
+        .controls {
+            width: 100%;
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .select-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        /* Mobile optimized native select styling */
+        .level-select {
+            width: 100%;
+            background-color: #12141c;
+            color: var(--text-main);
+            border: 1px solid rgba(197, 168, 128, 0.3);
+            padding: 12px;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            outline: none;
+            box-sizing: border-box;
+            appearance: none;
+            -webkit-appearance: none;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .select-wrapper::after {
+            content: "▼";
+            font-size: 0.7rem;
+            color: var(--accent-gold);
+            position: absolute;
+            right: 15px;
+            top: 16px;
+            pointer-events: none;
+        }
+
+        .draw-btn {
+            background-color: transparent;
+            color: var(--text-main);
+            border: 2px solid var(--accent-gold);
+            padding: 16px 32px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 30px;
+            cursor: pointer;
+            width: 100%;
+            outline: none;
+            box-shadow: 0 4px 15px rgba(197, 168, 128, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        .draw-btn:active {
+            transform: scale(0.96);
+            background-color: var(--accent-gold);
+            color: var(--bg-color);
+        }
+
+        .shuffling {
+            animation: jitter 0.1s infinite;
+        }
+
+        @keyframes jitter {
+            0% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-2px) scale(0.99); }
+            100% { transform: translateY(2px) scale(1.01); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>The Diary of a CEO</h1>
+            <p>Conversation Cards</p>
+        </header>
+
+        <div class="card-display" id="cardDisplay">
+            <span class="level-badge" id="levelBadge">Tap Below</span>
+            <p class="question-text" id="questionText">Unlock deeper levels of connection.</p>
+            <span class="attribution" id="attributionText">Ready when you are</span>
+        </div>
+
+        <div class="controls">
+            <div class="select-wrapper">
+                <select class="level-select" id="levelFilter">
+                    <option value="any">Any Level (All 52 Cards)</option>
+                    <option value="Level 1: Warm Up">Level 1: Warm Up</option>
+                    <option value="Level 2: Open Up">Level 2: Open Up</option>
+                    <option value="Level 3: The Deep End">Level 3: The Deep End</option>
+                </select>
+            </div>
+            <button class="draw-btn" id="drawBtn" onclick="drawCard()">Draw a Card</button>
+        </div>
+    </div>
+
+    <script>
+        // Exact count matching the real 52-card standalone standard edition deck matrix
+        const questionsDeck = [
+            // LEVEL 1: WARM UP (17 Cards)
+            { level: "Level 1: Warm Up", text: "What is your definition of luck?", author: "Inspired by Roman Kemp" },
+            { level: "Level 1: Warm Up", text: "What is something people value highly that you no longer care about?", author: "Inspired by Jay Shetty" },
+            { level: "Level 1: Warm Up", text: "What did you think was cool when you were younger, but really isn't now?", author: "General Deck Prompt" },
+            { level: "Level 1: Warm Up", text: "What is the best compliment you have ever received from a stranger?", author: "General Deck Prompt" },
+            { level: "Level 1: Warm Up", text: "When was the last time you completely changed your mind about something?", author: "Inspired by Africa Brooke" },
+            { level: "Level 1: Warm Up", text: "What is a habit or routine you started recently that has changed your days?", author: "General Deck Prompt" },
+            { level: "Level 1: Warm Up", text: "If you had an extra hour every single day, what would you spend it doing?", author: "General Deck Prompt" },
+            { level: "Level 1: Warm Up", text: "What book, podcast, or piece of media altered your worldview the most?", author: "General Deck Prompt" },
+            { level: "Level 1: Warm Up", text: "What is your go-to coping mechanism when you are visibly stressed?", author: "General Deck Prompt" },
+            { level: "Level 1: Warm Up", text: "What is an uncommon opinion you hold that most people disagree with?", author: "General Deck Prompt" },
+            { level: "Level 1: Warm Up", text: "What does an ideal, peaceful Sunday look like to you?", author: "General Deck Prompt" },
+            { level: "Level 1: Warm Up", text: "What is a skill you don't possess but deeply admire in others?", author: "General Deck Prompt" },
+            { level: "Level 1: Warm Up", text: "If social media disappeared tomorrow, what part of your life changes most?", author: "General Deck Prompt" },
+            { level: "Level 1: Warm Up", text: "What boundary have you recently set that you are proud of maintaining?", author: "General Deck Prompt" },
+            { level: "Level 1: Warm Up", text: "What is a minor purchase (under $50) that has brought you unexpected joy?", author: "General Deck Prompt" },
+            { level: "Level 1: Warm Up", text: "What city or place has felt most like home to you, outside of where you grew up?", author: "General Deck Prompt" },
+            { level: "Level 1: Warm Up", text: "What is your favorite topic of conversation when you are sitting around a dinner table?", author: "General Deck Prompt" },
+
+            // LEVEL 2: OPEN UP (18 Cards)
+            { level: "Level 2: Open Up", text: "What do you think your younger self would say if they looked at you today?", author: "Inspired by Lewis Capaldi" },
+            { level: "Level 2: Open Up", text: "What is one thing you would actively do right now if you weren't afraid at all?", author: "Inspired by Reshma Saujani" },
+            { level: "Level 2: Open Up", text: "What is your current definition of success, and how has it changed over time?", author: "Inspired by James Smith" },
+            { level: "Level 2: Open Up", text: "If you had to give all your money to one organisation tomorrow, which would it be?", author: "Inspired by Mel Robbins" },
+            { level: "Level 2: Open Up", text: "Who have you had to distance yourself or eject from your social life, and why?", author: "General Deck Prompt" },
+            { level: "Level 2: Open Up", text: "What shaped your relationship with and psychological attitudes toward money?", author: "General Deck Prompt" },
+            { level: "Level 2: Open Up", text: "When was the last time you felt truly appreciated by someone close to you?", author: "General Deck Prompt" },
+            { level: "Level 2: Open Up", text: "What is the biggest lie you are currently telling yourself?", author: "General Deck Prompt" },
+            { level: "Level 2: Open Up", text: "In what way is your family uniquely odd or fundamentally non-traditional?", author: "General Deck Prompt" },
+            { level: "Level 2: Open Up", text: "What part of your personality do you actively try to hide or mask from new friends?", author: "General Deck Prompt" },
+            { level: "Level 2: Open Up", text: "What do people assume about you that is completely wrong?", author: "General Deck Prompt" },
+            { level: "Level 2: Open Up", text: "What is the most emotionally exhausting part of your current day-to-day life?", author: "General Deck Prompt" },
+            { level: "Level 2: Open Up", text: "When did you last fail spectacularly, and what did it cost you emotionally?", author: "General Deck Prompt" },
+            { level: "Level 2: Open Up", text: "What do you find hardest to forgive in other people?", author: "General Deck Prompt" },
+            { level: "Level 2: Open Up", text: "If your current life was a movie, what would the central conflict be?", author: "General Deck Prompt" },
+            { level: "Level 2: Open Up", text: "What major risk did you take that didn't pay off, but you don't regret?", author: "General Deck Prompt" },
+            { level: "Level 2: Open Up", text: "What is a harsh truth about yourself that you've finally come to accept?", author: "General Deck Prompt" },
+            { level: "Level 2: Open Up", text: "What standard do you hold others to that you fail to meet yourself?", author: "General Deck Prompt" },
+
+            // LEVEL 3: THE DEEP END (17 Cards)
+            { level: "Level 3: The Deep End", text: "Who is the person you would most like to say sorry to right now, but haven't?", author: "Inspired by Will Storr" },
+            { level: "Level 3: The Deep End", text: "What is the greatest emotional gift another human being has ever given you?", author: "Inspired by Michael Acton Smith" },
+            { level: "Level 3: The Deep End", text: "What do you promise to do before you leave this earth to leave it a better place?", author: "Inspired by Mo Gawdat" },
+            { level: "Level 3: The Deep End", text: "If you could turn back the clock on just one day this year to do it differently, which day?", author: "Inspired by Rochelle Humes" },
+            { level: "Level 3: The Deep End", text: "What are you currently grieving the loss of (an idea, a version of you, a person)?", author: "General Deck Prompt" },
+            { level: "Level 3: The Deep End", text: "What is a memory you have that still brings you instant shame when it pops up?", author: "General Deck Prompt" },
+            { level: "Level 3: The Deep End", text: "How do you want to be remembered by the people who actually know you?", author: "General Deck Prompt" },
+            { level: "Level 3: The Deep End", text: "What does happiness truly mean to you, and are you actively sacrificing it for safety?", author: "Inspired by Tony Bellew" },
+            { level: "Level 3: The Deep End", text: "When was the last time you cried in front of someone else, and what triggered it?", author: "General Deck Prompt" },
+            { level: "Level 3: The Deep End", text: "What is the most vulnerable thing you've ever admitted out loud to anyone?", author: "General Deck Prompt" },
+            { level: "Level 3: The Deep End", text: "What insecure thought keeps you awake at 2 AM more than any other?", author: "General Deck Prompt" },
+            { level: "Level 3: The Deep End", text: "If you died tonight, what would be your biggest unfulfilled regret?", author: "General Deck Prompt" },
+            { level: "Level 3: The Deep End", text: "Who in your life would you take a bullet for, and who would take one for you?", author: "General Deck Prompt" },
+            { level: "Level 3: The Deep End", text: "What childhood wound are you still actively trying to heal as an adult?", author: "General Deck Prompt" },
+            { level: "Level 3: The Deep End", text: "Are you genuinely proud of who you are when nobody is watching you?", author: "General Deck Prompt" },
+            { level: "Level 3: The Deep End", text: "What love did you lose because you weren't ready to receive it properly?", author: "General Deck Prompt" },
+            { level: "Level 3: The Deep End", text: "What is something you are holding onto that you know you desperately need to let go of?", author: "General Deck Prompt" }
+        ];
+
+        function drawCard() {
+            const btn = document.getElementById('drawBtn');
+            const container = document.getElementById('cardDisplay');
+            const levelBadge = document.getElementById('levelBadge');
+            const questionText = document.getElementById('questionText');
+            const attributionText = document.getElementById('attributionText');
+            const selectedFilter = document.getElementById('levelFilter').value;
+
+            // Filter active deck list dynamically
+            const filteredDeck = selectedFilter === "any" 
+                ? questionsDeck 
+                : questionsDeck.filter(card => card.level === selectedFilter);
+
+            if (filteredDeck.length === 0) return;
+
+            btn.disabled = true;
+            container.classList.add('shuffling');
+
+            let shuffleCount = 0;
+            const shuffleInterval = setInterval(() => {
+                // Spinning wheel effect matching targeted constraints
+                const randomSample = filteredDeck[Math.floor(Math.random() * filteredDeck.length)];
+                levelBadge.innerText = randomSample.level;
+                questionText.innerText = randomSample.text;
+                attributionText.innerText = randomSample.author;
+                shuffleCount++;
+
+                if (shuffleCount > 15) { 
+                    clearInterval(shuffleInterval);
+                    
+                    const finalSelection = filteredDeck[Math.floor(Math.random() * filteredDeck.length)];
+                    
+                    levelBadge.innerText = finalSelection.level;
+                    questionText.innerText = finalSelection.text;
+                    attributionText.innerText = finalSelection.author;
+
+                    container.classList.remove('shuffling');
+                    btn.disabled = false;
+                }
+            }, 75);
+        }
+    </script>
+</body>
+</html>
