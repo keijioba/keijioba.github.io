@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coco's Jokes</title>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #fff0f5 0%, #fbcce7 100%);
+            --plush-pink: #f49ac2;
+            --plush-dark: #b3547d;
+            --velvet-card: #ffffff;
+            --gold-accent: #d4af37;
+            --text-dark: #4a283d;
+            --text-muted: #8c5e7a;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 420px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 94vh;
+            z-index: 2;
+        }
+
+        header {
+            margin-top: 15px;
+            position: relative;
+            width: 100%;
+        }
+
+        header h1 {
+            font-family: 'Georgia', serif;
+            font-size: 2.2rem;
+            color: var(--plush-dark);
+            margin: 0;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+            letter-spacing: 1px;
+        }
+
+        header p {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin: 3px 0 0 0;
+            font-weight: bold;
+        }
+
+        .counter-badge {
+            font-size: 0.75rem;
+            color: var(--plush-dark);
+            margin-top: 5px;
+            font-weight: bold;
+            opacity: 0.8;
+        }
+
+        /* Diskreter Reset-Button oben rechts */
+        .clear-btn {
+            position: absolute;
+            top: 0;
+            right: 5px;
+            background: transparent;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 5px;
+            opacity: 0.6;
+            transition: opacity 0.2s, transform 0.2s;
+            line-height: 1;
+        }
+
+        .clear-btn:active {
+            opacity: 1;
+            transform: scale(0.9);
+        }
+
+        .wheel-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 10px 0;
+        }
+
+        .wheel-pointer {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-top: 20px solid var(--gold-accent);
+            z-index: 10;
+            filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.2));
+        }
+
+        .wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 6px solid var(--velvet-card);
+            box-shadow: 0 8px 20px rgba(179, 84, 125, 0.3), inset 0 0 15px rgba(0,0,0,0.05);
+            background: conic-gradient(
+                #f7a3c9 0deg 45deg, #fbcce7 45deg 90deg,
+                #f7a3c9 90deg 135deg, #fbcce7 135deg 180deg,
+                #f7a3c9 180deg 225deg, #fbcce7 225deg 270deg,
+                #f7a3c9 270deg 315deg, #fbcce7 315deg 360deg
+            );
+            transition: transform 3s cubic-bezier(0.1, 0.8, 0.1, 1);
+        }
+
+        .wheel-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 36px;
+            height: 36px;
+            background: var(--velvet-card);
+            border-radius: 50%;
+            border: 3px solid var(--gold-accent);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .joke-card {
+            background-color: var(--velvet-card);
+            width: 100%;
+            min-height: 240px;
+            border-radius: 24px;
+            box-shadow: 0 12px 30px rgba(179, 84, 125, 0.15);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 25px 25px;
+            box-sizing: border-box;
+            border: 1px solid rgba(244, 154, 194, 0.3);
+            position: relative;
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 15px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--plush-dark);
+            font-weight: bold;
+            background-color: #fff0f5;
+            padding: 4px 12px;
+            border-radius: 12px;
+        }
+
+        .joke-text {
+            font-size: 1.05rem;
+            line-height: 1.55;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin: 20px 0 0 0;
+            word-wrap: break-word;
+            max-height: 165px;
+            overflow-y: auto;
+            white-space: pre-line;
+        }
+
+        .controls {
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        .spin-btn {
+            background: linear-gradient(135deg, var(--plush-pink) 0%, #f37cb4 100%);
+            color: white;
+            border: 2px solid var(--velvet-card);
+            padding: 16px 32px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 30px;
+            cursor: pointer;
+            width: 100%;
+            outline: none;
+            box-shadow: 0 5px 15px rgba(243, 124, 180, 0.4);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+
+        .spin-btn:active {
+            transform: scale(0.97);
+        }
+
+        .spin-btn:disabled {
+            background: #e0b6ca;
+            box-shadow: none;
+            opacity: 0.7;
+        }
+
+        .glitter {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            opacity: 0;
+            top: -10px;
+            z-index: 1;
+            pointer-events: none;
+            border-radius: 50%;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <button class="clear-btn" id="clearBtn" title="Verlauf löschen">⚙️</button>
+            <h1>Coco's Jokes</h1>
+            <p>Smarter Humor</p>
+            <div class="counter-badge" id="counterDisplay">0 / 100 Witze gesehen</div>
+        </header>
+
+        <div class="wheel-container">
+            <div class="wheel-pointer"></div>
+            <div class="wheel" id="luckyWheel"></div>
+            <div class="wheel-center"></div>
+        </div>
+
+        <div class="joke-card">
+            <span class="category-badge" id="categoryBadge">Bienvenue</span>
+            <p class="joke-text" id="jokeText">Bereit für ein Lächeln? Drehe das Rad für einen guten Witz!</p>
+        </div>
+
+        <div class="controls">
+            <button class="spin-btn" id="spinBtn">Rad drehen</button>
+        </div>
+    </div>
+
+    <script>
+        const jokesDatabase = [
+            { id: 1, cat: "Alltag", text: "Mein Fitnesstrainer hat gesagt, ich soll den Tag mit Dehnübungen beginnen.\n\nIch habe mich jetzt erst mal von 08:00 auf 09:30 Uhr gedehnt." },
+            { id: 2, cat: "Weisheit", text: "Erfahrung ist die Summe aller Fehler, die man machen durfte, ohne sich dabei erwischen zu lassen." },
+            { id: 3, cat: "Büro", text: "Chef: 'Sie sind diese Woche schon dreimal zu spät gekommen! Was schlussfolgern Sie daraus?'\n\nAngestellter: 'Es ist bereits Donnerstag!'" },
+            { id: 4, cat: "Modern Life", text: "Ich habe heute versucht, meine Probleme zu ertränken.\n\nAber meine Familie kann einfach verdammt gut schwimmen." },
+            { id: 5, cat: "Gastronomie", text: "Gast zum Kellner: 'Zahlen, bitte!'\nKellner: 'Gerne. Drei, acht, fünfzehn, einundzwanzig...'\n\nGast: 'Nein, ich möchte die Rechnung!'\nKellner: 'Ach so, ich dachte wir spielen Bingo.'" },
+            { id: 6, cat: "Ehe & Co", text: "Meine Frau beschwerte sich, dass ich ihr nie zuhöre.\n\nOder so ähnlich, ich war ehrlich gesagt etwas abgelenkt." },
+            { id: 7, cat: "Kommunikation", text: "Ironie ist, wenn man eine Nacht darüber schläft, um am nächsten Tag noch wütender zu sein." },
+            { id: 8, cat: "Büro", text: "Ein optimistisch gestimmter Mitarbeiter ist meistens nur schlecht informiert." },
+            { id: 9, cat: "Klassiker", text: "Treffen sich zwei Statiker. Sagt der eine: 'Und, wie läuft's?'\n\nSagt der andere: 'Schwankt so vor sich hin.'" },
+            { id: 10, cat: "Logik", text: "Die ersten 40 Jahre der Kindheit sind bekanntlich die schwersten." },
+            { id: 11, cat: "Alltag", text: "Ich habe gestern beschlossen, dem inneren Schweinehund die Freundschaft zu kündigen.\n\nJetzt hat er das alleinige Sorgerecht für die Couch beantragt." },
+            { id: 12, cat: "Small Talk", text: "Gespräch unter Nachbarn:\n'Ihr Hund hat gestern meinen Rasenmäher gebissen!'\n\n'Das kann gar nicht sein, mein Hund hat überhaupt keine Zähne.'\n'Ja, aber Sie haben ihm mein Gebiss geliehen!'" },
+            { id: 13, cat: "Psychologie", text: "Man sollte viel öfter einfach mal tief durchatmen – und wenn es nur ist, um der Gegenseite nicht direkt an die Gurgel zu gehen." },
+            { id: 14, cat: "Zeitgeist", text: "Früher ging ich einkaufen, wenn der Kühlschrank leer war.\n\nHeute gehe ich einkaufen, wenn der Akku vom Smartphone voll genug für die Einkaufsliste ist." },
+            { id: 15, cat: "Konversation", text: "Das Schöne an sarkastischen Menschen ist, dass man nie genau weiß, ob sie einen gerade loben oder dezent beleidigen." },
+            { id: 16, cat: "Lebenskunst", text: "Ich bin heute extrem motiviert. Allerdings hält diese Motivation nur so lange an, bis ich mich bewege." },
+            { id: 17, cat: "Alltag", text: "Ich habe mir ein neues Kochbuch gekauft. Das erste Rezept lautet: 'Man nehme einen sauberen Topf.'\n\nAb da wurde es mir ehrlich gesagt zu unrealistisch." },
+            { id: 18, cat: "Büro", text: "Ich arbeite immer mit vollem Einsatz!\n\nMontags 20 %, dienstags 30 %, mittwochs 30 %, donnerstags 15 % und freitags die restlichen 5 %." },
+            { id: 19, cat: "Weisheit", text: "Man muss kein Genie sein, um zu merken, dass das Leben viel einfacher ist, wenn man die Erwartungen an andere auf Null herunterschraubt." },
+            { id: 20, cat: "Technik", text: "Das Smartphone hat uns die Freiheit geschenkt, von absolut überall auf der Welt aus ignoriert werden zu können." },
+            { id: 21, cat: "Ehe & Co", text: "Meine Frau wollte mehr Romantik. Ich habe ihr daraufhin im Kerzenschein erklärt, warum die Steuererklärung dieses Jahr später kommt." },
+            { id: 22, cat: "Gastronomie", text: "Im Restaurant: 'Herr Ober, das Messer ist stumpf und das Fleisch zäh!'\n\n'Da haben Sie aber Glück gehabt. Stellen Sie sich mal vor, es wäre umgekehrt!'" },
+            { id: 23, cat: "Gute Frage", text: "Wenn die Stiftung Warentest eine Decke testet, ist das dann eigentlich eine Steppdecke?" },
+            { id: 24, cat: "Alltag", text: "Ich besitze jetzt ein Gerät, das mir täglich sagt, wie viele Schritte ich gelaufen bin.\n\nMein Sofa nennt es liebevoll: 'Den Verräter'." },
+            { id: 25, cat: "Logik", text: "Natürlich rede ich manchmal mit mir selbst. Man braucht im Leben eben ab und zu eine kompetente Beratung." },
+            { id: 26, cat: "Büro", text: "Teamwork bedeutet hier vor allem: Ein Kollege sucht die Arbeit, die anderen teilen sie sich auf, damit niemand etwas damit zu tun haben muss." },
+            { id: 27, cat: "Erkenntnis", text: "Man merkt, dass man älter wird, wenn die gemütlichen Abende auf der Couch keine Ausnahme mehr sind, sondern die persönliche Hauptbeschäftigung." },
+            { id: 28, cat: "Alltag", text: "Ich habe heute beim Aufräumen eine alte To-Do-Liste von 2021 gefunden.\n\nIch bin stolz zu sagen: Drei Dinge davon haben sich inzwischen von ganz alleine erledigt." },
+            { id: 29, cat: "Gesundheit", text: "Mein Arzt sagt, ich solle meinen Kaffee-Konsum reduzieren.\n\nIch suche jetzt erst mal einen Arzt, der weniger pessimistisch eingestellt ist." },
+            { id: 30, cat: "Kommunikation", text: "Diplomatie ist die Kunst, jemanden so elegant zum Teufel zu schicken, dass er sich auf die Reise freut." },
+            { id: 31, cat: "Finanzen", text: "Geld allein macht definitiv nicht glücklich. Man sollte zusätzlich schon noch ein paar Aktien und Immobilien besitzen." },
+            { id: 32, cat: "Alltag", text: "Ich bin heute Morgen aufgewacht, habe die Arme ausgestreckt, die Knie gebeugt und die Gelenke knacken lassen.\n\nMein Körper klingt mittlerweile wie eine Schüssel Knuspermüsli." },
+            { id: 33, cat: "Zeitgeist", text: "Manchmal schaue ich mir die Preise für Wohnungen an und beschließe spontan, einfach unsterblich zu werden, damit sich die Miete langfristig amortisiert." },
+            { id: 34, cat: "Büro", text: "Es gibt Tage, da ist mein größtes Talent im Büro schlichtweg die Tatsache, dass ich niemanden laut anschreie." },
+            { id: 35, cat: "Ehe & Co", text: "Wir haben ein neues Abkommen zu Hause: Ich treffe die großen, weltbewegenden Entscheidungen und meine Frau entscheidet, welche das genau sind." },
+            { id: 36, cat: "Small Talk", text: "Warum schaust du eigentlich so traurig?\n\n'Ich habe vorhin meine Traumfrau getroffen.'\n'Und, warum bist du dann traurig?'\n'Sie hat mich leider nicht getroffen.'" },
+            { id: 37, cat: "Weisheit", text: "Man sollte den Tag nicht vor dem Abend loben. Vor allem nicht, wenn man noch vorhat, das Haus zu verlassen." },
+            { id: 38, cat: "Alltag", text: "Ich habe mir vorgenommen, mich gesünder zu ernähren. Die Schokolade liegt jetzt im obersten Regalfach. Ich nenne es: 'Das Workout'." },
+            { id: 39, cat: "Logik", text: "Wer im Glashaus sitzt, sollte sich im Dunkeln umziehen." },
+            { id: 40, cat: "Erkenntnis", text: "Das Problem mit dem gesunden Menschenverstand ist leider, dass er nicht allzu weit verbreitet ist." },
+            { id: 41, cat: "Lebensphilosophie", text: "Ich plane nicht im Voraus. Jedes Mal, wenn ich das tue, grinst das Universum und holt die versteckte Kamera raus." },
+            { id: 42, cat: "Büro", text: "Ich kam heute morgen hochmotiviert ins Büro. Aber nach zwei Minuten stellte sich heraus, dass der Kaffeeautomat kaputt ist. Game over." },
+            { id: 43, cat: "Zeitmanagement", text: "Pünktlichkeit ist die Kunst, richtig einzuschätzen, wie viel Verspätung der andere haben wird." },
+            { id: 44, cat: "Finanzen", text: "Am Ende des Geldes ist einfach noch erschreckend viel Monat übrig." },
+            { id: 45, cat: "Modern Life", text: "Ich habe heute versucht, Multitasking zu machen. Jetzt brennt das Wasser und die Spülmaschine schickt mir Push-Nachrichten." },
+            { id: 46, cat: "Logik", text: "Wenn man nachts nichts essen soll, warum gibt es dann bitteschön eine kleine Lampe im Kühlschrank?" },
+            { id: 47, cat: "Ehe & Co", text: "Beziehungsstatus: Wir teilen uns die Decke im Bett jetzt nach einem sehr komplexen, nonverbalen Kampfsport-System auf." },
+            { id: 48, cat: "Shopping", text: "Ich bin in einem Alter, in dem mich ein stabiler, gut organisierter Baumarkt emotional tief berührt." },
+            { id: 49, cat: "Kommunikation", text: "Manchmal antworte ich erst nach drei Tagen auf Nachrichten, weil ich die Konversation gedanklich schon komplett und sehr harmonisch abgeschlossen hatte." },
+            { id: 50, cat: "Alltag", text: "Natürlich treibe ich Sport. Ich laufe mehrmals am Tag Gefahr, völlig die Beherrschung zu verlieren." },
+            { id: 51, cat: "Büro", text: "Mein Job macht mir richtig Spaß. Nur die acht Stunden zwischen dem Kommen und dem Gehen könnten etwas entspannter sein." },
+            { id: 52, cat: "Weisheit", text: "Man soll ja den Tag positiv beginnen. Ich bin heute morgen zumindest schon mal nicht über das Netzkabel gestolpert." },
+            { id: 53, cat: "Modern Life", text: "Ich habe beschlossen, nur noch biologisch abbaubaren Stress an mich heranzulassen." },
+            { id: 54, cat: "Small Talk", text: "Ich habe ein tolles Rezept für kalte Tage: Einfach die Heizung aufdrehen und so tun, als hätte man gekocht." },
+            { id: 55, cat: "Alltag", text: "Ich bin kein Morgenmensch. Ich bin nicht mal ein Vormittagsmensch. Eigentlich bin ich erst ab dem späten Nachmittag sozial kompatibel." },
+            { id: 56, cat: "Zeitgeist", text: "Wir leben in einer Welt, in der Passwörter sicherer sein müssen als die gesamte globale Infrastruktur, aber wir sie auf Post-its schreiben." },
+            { id: 57, cat: "Gastronomie", text: "Im Café: 'Ist dieser Kuchen laktosefrei, glutenfrei und vegan?'\n\n'Ja, das ist eine Serviette.'" },
+            { id: 58, cat: "Ehe & Co", text: "Wenn meine Frau sagt: 'Wir müssen reden', läuft mir ein kalter Schauer über den Rücken – selbst wenn ich weiß, dass ich unschuldig bin." },
+            { id: 59, cat: "Logik", text: "Das Wort 'Ernährungsplan' fängt nicht umsonst mit 'Er' an. Weil es meistens schiefgeht." },
+            { id: 60, cat: "Finanzen", text: "Ich habe mein Budget für diesen Monat überprüft. Wenn ich ab morgen aufhöre zu atmen, komme ich finanziell perfekt hin." },
+            { id: 61, cat: "Alltag", text: "Ich wollte heute produktiv sein, aber das Bett hat mich einfach als Geisel genommen. Es war Stockholm-Syndrom vom Feinsten." },
+            { id: 62, cat: "Büro", text: "Ein Meeting ist der perfekte Ort, um Leuten dabei zuzusehen, wie sie Arbeit beschreiben, die sie eigentlich tun sollten." },
+            { id: 63, cat: "Weisheit", text: "Nichts stabilisiert die mentale Gesundheit so sehr wie der feste Entschluss, dass die Meinung anderer einem schlichtweg egal ist." },
+            { id: 64, cat: "Modern Life", text: "Ich habe meine Smartwatch weggesperrt. Ich lasse mir doch nicht von einem Stück Silikon sagen, dass ich mich heute zu wenig bewegt habe." },
+            { id: 65, cat: "Kommunikation", text: "Das Wort 'Mhm' ist das Schweizer Taschenmesser der deutschen Sprache. Es passt einfach immer." },
+            { id: 66, cat: "Alltag", text: "Meine Ausdauer reicht derzeit genau vom Kühlschrank bis zur Couch. Und selbst da lege ich manchmal eine strategische Pause ein." },
+            { id: 67, cat: "Erkenntnis", text: "Man weiß, dass man erwachsen ist, wenn man sich auf ein neues Set sauberer Putzlappen freut." },
+            { id: 68, cat: "Technik", text: "Mein Staubsauger-Roboter hat sich im Badezimmer eingesperrt und weigert sich rauszukommen. Er spiegelt meine Work-Life-Balance perfekt wider." },
+            { id: 69, cat: "Ehe & Co", text: "Wir streiten uns nie. Wir führen lediglich temporäre, akustisch intensivierte Optimierungsgespräche." },
+            { id: 70, cat: "Zeitgeist", text: "Früher hatten wir Geheimnisse. Heute haben wir eine Datenschutzerklärung, die sowieso niemand liest." },
+            { id: 71, cat: "Büro", text: "Der Kaffee im Büro schmeckt heute wieder so, als hätte der Koch die Bohne nur von Weitem gegrüßt." },
+            { id: 72, cat: "Alltag", text: "Ich habe heute versucht, meine Komfortzone zu verlassen. Es war kalt, windig und die Leute waren unhöflich. Bin wieder zurück." },
+            { id: 73, cat: "Logik", text: "Wer schläft, sündigt nicht. Wer vorher sündigt, schläft allerdings deutlich besser." },
+            { id: 74, cat: "Finanzen", text: "Ich habe jetzt ein Online-Sparkonto eingerichtet. Es sorgt dafür, dass mein Geld digital und vollkommen unbemerkt verschwindet." },
+            { id: 75, cat: "Weisheit", text: "Man sollte immer ein bisschen Platz im Kopf frei halten – für die absoluten Dummheiten, die das Leben erst lebenswert machen." },
+            { id: 76, cat: "Modern Life", text: "Ich habe heute ein Software-Update auf meinem Kühlschrank installiert. Jetzt weigert er sich, vor 22 Uhr Kohlenhydrate freizugeben." },
+            { id: 77, cat: "Small Talk", text: "Ich bin heute so müde, ich könnte eine gesamte Kanne Kaffee einfach intravenös gebrauchen." },
+            { id: 78, cat: "Alltag", text: "Das Einzige, was bei mir im Haushalt im Moment wirklich tadellos läuft, ist die Nase." },
+            { id: 79, cat: "Büro", text: "Ich habe heute im Homeoffice die Kamera angelassen. Die Kollegen wissen jetzt zumindest, dass ich eine sehr schöne Pyjamahose besitze." },
+            { id: 80, cat: "Erkenntnis", text: "Lebenserfahrung bedeutet, dass man genau weiß, welche Ausrede man parat haben muss, um eine Einladung abzusagen." },
+            { id: 81, cat: "Zeitgeist", text: "Mein Akku ist schneller leer als meine Geduld – und das will im Moment wirklich einiges heißen." },
+            { id: 82, cat: "Ehe & Co", text: "Mein Partner sagt, ich sei stur. Ich sehe das völlig anders und werde meine Meinung dazu auch unter Androhung von Gewalt niemals ändern." },
+            { id: 83, cat: "Gastronomie", text: "Ein Kellner bringt die Suppe und hat den Daumen drin. Gast: 'Sagen Sie mal!'\nKellner: 'Keine Sorge, die Suppe ist gar nicht mehr so heiß.'" },
+            { id: 84, cat: "Logik", text: "Man kann nicht alles haben im Leben. Wo sollte man den ganzen Kram denn auch bitteschön lagern?" },
+            { id: 85, cat: "Alltag", text: "Ich habe heute beschlossen, ein wenig Achtsamkeit zu praktizieren. Nach pfünf Minuten ist mir aufgefallen, wie laut meine Nachbarn atmen." },
+            { id: 86, cat: "Büro", text: "Ich bin heute der Fels in der Brandung. Ich bewege mich kein Stück und lasse alles über mich ergehen." },
+            { id: 87, cat: "Weisheit", text: "Geduld ist eine Tugend. Aber manchmal ist ein lautes, gepflegtes Fluchen einfach wesentlich effektiver." },
+            { id: 88, cat: "Modern Life", text: "Wenn mein Paketbote mich öfter sieht als meine engen Freunde, sollten wir vielleicht mal über unsere Beziehungsdefinition sprechen." },
+            { id: 89, cat: "Finanzen", text: "Ich spare im Moment an allen Ecken und Enden. Hauptsächlich an den Enden, da ist es am einfachsten." },
+            { id: 90, cat: "Alltag", text: "Ich habe ein neues Sportoutfit gekauft. Es sieht auf dem Sessel neben dem Bett wirklich unheimlich sportlich aus." },
+            { id: 91, cat: "Kommunikation", text: "Ein 'Aha' im richtigen Tonfall kann eine ganze philosophische Abhandlung über die Inkompetenz des Gegenübers ersetzen." },
+            { id: 92, cat: "Zeitgeist", text: "Früher haben wir uns Sorgen um die Zukunft gemacht. Heute sind wir froh, wenn das WLAN stabil bleibt." },
+            { id: 93, cat: "Ehe & Co", text: "Liebe ist, wenn man dem anderen das letzte Stück Pizza überlässt, obwohl man selbst noch hungrig ist – und es ihm danach wochenlang vorwirft." },
+            { id: 94, cat: "Büro", text: "Ich habe heute einen Zettel mit der Aufschrift 'Wichtig' weggeschmissen. Das Risiko erhöht den Puls ungemein." },
+            { id: 95, cat: "Logik", text: "Wenn man im Wörterbuch nach dem Wort 'Motivation' sucht, findet man da im Moment höchstens ein Bild von meiner Couch." },
+            { id: 96, cat: "Alltag", text: "Ich habe heute die Fenster geputzt. Jetzt sehe ich die Probleme da draußen viel schärfer." },
+            { id: 97, cat: "Small Talk", text: "Ich habe heute ein Kompliment bekommen. Jemand meinte, ich sähe sehr entspannt aus. Ich war eigentlich nur zu müde, um mein Gesicht zu bewegen." },
+            { id: 98, cat: "Finanzen", text: "Geld verdirbt den Charakter. Zum Glück bin ich finanziell absolut charakterfest geschützt." },
+            { id: 99, cat: "Weisheit", text: "Der klügere gibt so lange nach, bis er der Dumme ist. Deswegen halte ich jetzt einfach direkt dagegen." },
+            { id: 100, cat: "Erkenntnis", text: "Herzlichen Glückwunsch! Du hast das Ende der Witze erreicht. Du bist jetzt offiziell maximal tiefenentspannt." }
+        ];
+
+        let currentRotation = 0;
+        const btn = document.getElementById('spinBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const wheel = document.getElementById('luckyWheel');
+        const categoryBadge = document.getElementById('categoryBadge');
+        const jokeText = document.getElementById('jokeText');
+        const counterDisplay = document.getElementById('counterDisplay');
+
+        function getSeenJokes() {
+            const seen = localStorage.getItem('cocos_seen_jokes');
+            return seen ? JSON.parse(seen) : [];
+        }
+
+        function saveSeenJoke(id) {
+            const seen = getSeenJokes();
+            if (!seen.includes(id)) {
+                seen.push(id);
+                localStorage.setItem('cocos_seen_jokes', JSON.stringify(seen));
+            }
+            updateCounter();
+        }
+
+        function updateCounter() {
+            const seenCount = getSeenJokes().length;
+            counterDisplay.innerText = `${seenCount} / 100 Witze gesehen`;
+        }
+
+        function createGlitterRain() {
+            const colors = ['#f49ac2', '#fbcce7', '#d4af37', '#ffffff', '#ffb6c1'];
+            const shapes = ['50%', '0%'];
+            
+            for (let i = 0; i < 45; i++) {
+                const glitter = document.createElement('div');
+                glitter.classList.add('glitter');
+                
+                glitter.style.left = Math.random() * 100 + 'vw';
+                glitter.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                glitter.style.borderRadius = shapes[Math.floor(Math.random() * shapes.length)];
+                
+                const size = Math.random() * 6 + 6;
+                glitter.style.width = `${size}px`;
+                glitter.style.height = `${size}px`;
+                
+                glitter.style.animationDuration = Math.random() * 2 + 1.5 + 's';
+                glitter.style.animationDelay = Math.random() * 0.4 + 's';
+                
+                document.body.appendChild(glitter);
+                
+                glitter.addEventListener('animationend', () => {
+                    glitter.remove();
+                });
+            }
+        }
+
+        btn.addEventListener('click', () => {
+            const seenJokes = getSeenJokes();
+            const availableJokes = jokesDatabase.filter(joke => !seenJokes.includes(joke.id));
+
+            if (availableJokes.length === 0) {
+                categoryBadge.innerText = "Wow!";
+                jokeText.innerText = "Du hast alle 100 Witze gesehen! Der Verlauf wird jetzt automatisch zurückgesetzt, damit du von vorne starten kannst.";
+                localStorage.removeItem('cocos_seen_jokes');
+                updateCounter();
+                return;
+            }
+
+            btn.disabled = true;
+            const randomJoke = availableJokes[Math.floor(Math.random() * availableJokes.length)];
+
+            const addedRotation = 1080 + Math.floor(Math.random() * 360);
+            currentRotation += addedRotation;
+            wheel.style.transform = `rotate(${currentRotation}deg)`;
+
+            setTimeout(() => {
+                categoryBadge.innerText = randomJoke.cat;
+                jokeText.innerText = randomJoke.text;
+                
+                saveSeenJoke(randomJoke.id);
+                createGlitterRain();
+                btn.disabled = false;
+            }, 3000);
+        });
+
+        clearBtn.addEventListener('click', () => {
+            if (confirm("Möchtest du deinen Witz-Verlauf wirklich zurücksetzen?")) {
+                localStorage.removeItem('cocos_seen_jokes');
+                updateCounter();
+                categoryBadge.innerText = "Reset";
+                jokeText.innerText = "Verlauf gelöscht! Alle 100 Witze sind wieder im Lostopf.";
+            }
+        });
+
+        updateCounter();
+    </script>
+</body>
+</html>
