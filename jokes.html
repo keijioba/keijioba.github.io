@@ -1,465 +1,468 @@
-    <!DOCTYPE html>
-    <html lang="de">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Coco's Jokes</title>
-        <style>
-            :root {
-                --bg-gradient: linear-gradient(135deg, #fff0f5 0%, #fbcce7 100%);
-                --plush-pink: #f49ac2;
-                --plush-dark: #b3547d;
-                --velvet-card: #ffffff;
-                --gold-accent: #d4af37;
-                --text-dark: #4a283d;
-                --text-muted: #8c5e7a;
-            }
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coco's Jokes</title>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #fff0f5 0%, #fbcce7 100%);
+            --plush-pink: #f49ac2;
+            --plush-dark: #b3547d;
+            --velvet-card: #ffffff;
+            --gold-accent: #d4af37;
+            --text-dark: #4a283d;
+            --text-muted: #8c5e7a;
+        }
 
-            body {
-                font-family: 'Helvetica Neue', Arial, sans-serif;
-                background: var(--bg-gradient);
-                color: var(--text-dark);
-                margin: 0;
-                padding: 0;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                min-height: 100vh;
-                overflow: hidden;
-                -webkit-tap-highlight-color: transparent;
-                position: relative;
-            }
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+        }
 
-            .container {
-                width: 90%;
-                max-width: 420px;
-                text-align: center;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: space-between;
-                height: 94vh;
-                z-index: 2;
-            }
+        .container {
+            width: 90%;
+            max-width: 420px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 94vh;
+            z-index: 2;
+        }
 
-            header {
-                margin-top: 15px;
-                position: relative;
-                width: 100%;
-            }
+        header {
+            margin-top: 15px;
+            position: relative;
+            width: 100%;
+        }
 
-            header h1 {
-                font-family: 'Georgia', serif;
-                font-size: 2.2rem;
-                color: var(--plush-dark);
-                margin: 0;
-                text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
-                letter-spacing: 1px;
-            }
+        header h1 {
+            font-family: 'Georgia', serif;
+            font-size: 2.2rem;
+            color: var(--plush-dark);
+            margin: 0;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+            letter-spacing: 1px;
+        }
 
-            header p {
-                font-size: 0.8rem;
-                text-transform: uppercase;
-                letter-spacing: 2px;
-                color: var(--text-muted);
-                margin: 3px 0 0 0;
-                font-weight: bold;
-            }
+        header p {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin: 3px 0 0 0;
+            font-weight: bold;
+        }
 
-            .counter-badge {
-                font-size: 0.75rem;
-                color: var(--plush-dark);
-                margin-top: 5px;
-                font-weight: bold;
-                opacity: 0.8;
-            }
+        .counter-badge {
+            font-size: 0.75rem;
+            color: var(--plush-dark);
+            margin-top: 5px;
+            font-weight: bold;
+            opacity: 0.8;
+        }
 
-            /* Diskreter Reset-Button oben rechts */
-            .clear-btn {
-                position: absolute;
-                top: 0;
-                right: 5px;
-                background: transparent;
-                border: none;
-                font-size: 1.25rem;
-                cursor: pointer;
-                padding: 5px;
-                opacity: 0.6;
-                transition: opacity 0.2s, transform 0.2s;
-                line-height: 1;
-            }
+        .clear-btn {
+            position: absolute;
+            top: 0;
+            right: 5px;
+            background: transparent;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 5px;
+            opacity: 0.6;
+            transition: opacity 0.2s, transform 0.2s;
+            line-height: 1;
+        }
 
-            .clear-btn:active {
-                opacity: 1;
-                transform: scale(0.9);
-            }
+        .clear-btn:active {
+            opacity: 1;
+            transform: scale(0.9);
+        }
 
-            .wheel-container {
-                position: relative;
-                width: 180px;
-                height: 180px;
-                margin: 10px 0;
-            }
+        .wheel-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 10px 0;
+        }
 
-            .wheel-pointer {
-                position: absolute;
-                top: -12px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 0;
-                height: 0;
-                border-left: 12px solid transparent;
-                border-right: 12px solid transparent;
-                border-top: 20px solid var(--gold-accent);
-                z-index: 10;
-                filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.2));
-            }
+        .wheel-pointer {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-top: 20px solid var(--gold-accent);
+            z-index: 10;
+            filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.2));
+        }
 
-            .wheel {
-                width: 100%;
-                height: 100%;
-                border-radius: 50%;
-                border: 6px solid var(--velvet-card);
-                box-shadow: 0 8px 20px rgba(179, 84, 125, 0.3), inset 0 0 15px rgba(0,0,0,0.05);
-                background: conic-gradient(
-                    #f7a3c9 0deg 45deg, #fbcce7 45deg 90deg,
-                    #f7a3c9 90deg 135deg, #fbcce7 135deg 180deg,
-                    #f7a3c9 180deg 225deg, #fbcce7 225deg 270deg,
-                    #f7a3c9 270deg 315deg, #fbcce7 315deg 360deg
-                );
-                transition: transform 3s cubic-bezier(0.1, 0.8, 0.1, 1);
-            }
+        .wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 6px solid var(--velvet-card);
+            box-shadow: 0 8px 20px rgba(179, 84, 125, 0.3), inset 0 0 15px rgba(0,0,0,0.05);
+            background: conic-gradient(
+                #f7a3c9 0deg 45deg, #fbcce7 45deg 90deg,
+                #f7a3c9 90deg 135deg, #fbcce7 135deg 180deg,
+                #f7a3c9 180deg 225deg, #fbcce7 225deg 270deg,
+                #f7a3c9 270deg 315deg, #fbcce7 315deg 360deg
+            );
+            transition: transform 3s cubic-bezier(0.1, 0.8, 0.1, 1);
+        }
 
-            .wheel-center {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                width: 36px;
-                height: 36px;
-                background: var(--velvet-card);
-                border-radius: 50%;
-                border: 3px solid var(--gold-accent);
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            }
+        .wheel-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 36px;
+            height: 36px;
+            background: var(--velvet-card);
+            border-radius: 50%;
+            border: 3px solid var(--gold-accent);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
 
-            .joke-card {
-                background-color: var(--velvet-card);
-                width: 100%;
-                min-height: 240px;
-                border-radius: 24px;
-                box-shadow: 0 12px 30px rgba(179, 84, 125, 0.15);
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                padding: 25px 25px;
-                box-sizing: border-box;
-                border: 1px solid rgba(244, 154, 194, 0.3);
-                position: relative;
-            }
+        .joke-card {
+            background-color: var(--velvet-card);
+            width: 100%;
+            min-height: 250px;
+            border-radius: 24px;
+            box-shadow: 0 12px 30px rgba(179, 84, 125, 0.15);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 25px 25px;
+            box-sizing: border-box;
+            border: 1px solid rgba(244, 154, 194, 0.3);
+            position: relative;
+        }
 
-            .category-badge {
-                position: absolute;
-                top: 15px;
-                font-size: 0.75rem;
-                text-transform: uppercase;
-                letter-spacing: 1.5px;
-                color: var(--plush-dark);
-                font-weight: bold;
-                background-color: #fff0f5;
-                padding: 4px 12px;
-                border-radius: 12px;
-            }
+        .category-badge {
+            position: absolute;
+            top: 15px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--plush-dark);
+            font-weight: bold;
+            background-color: #fff0f5;
+            padding: 4px 12px;
+            border-radius: 12px;
+        }
 
-            .joke-text {
-                font-size: 1.05rem;
-                line-height: 1.55;
-                font-weight: 500;
-                color: var(--text-dark);
-                margin: 20px 0 0 0;
-                word-wrap: break-word;
-                max-height: 165px;
-                overflow-y: auto;
-                white-space: pre-line;
-            }
+        .joke-text {
+            font-size: 0.98rem; /* Minimal kleiner für die längeren Texte */
+            line-height: 1.5;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin: 25px 0 0 0;
+            word-wrap: break-word;
+            max-height: 180px;
+            overflow-y: auto;
+            white-space: pre-line;
+            text-align: left; /* Liest sich bei langen Geschichten besser */
+        }
 
-            .controls {
-                width: 100%;
-                margin-bottom: 25px;
-            }
+        .controls {
+            width: 100%;
+            margin-bottom: 25px;
+        }
 
-            .spin-btn {
-                background: linear-gradient(135deg, var(--plush-pink) 0%, #f37cb4 100%);
-                color: white;
-                border: 2px solid var(--velvet-card);
-                padding: 16px 32px;
-                font-size: 1.1rem;
-                font-weight: bold;
-                text-transform: uppercase;
-                letter-spacing: 2px;
-                border-radius: 30px;
-                cursor: pointer;
-                width: 100%;
-                outline: none;
-                box-shadow: 0 5px 15px rgba(243, 124, 180, 0.4);
-                text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-                transition: all 0.2s ease;
-            }
+        .spin-btn {
+            background: linear-gradient(135deg, var(--plush-pink) 0%, #f37cb4 100%);
+            color: white;
+            border: 2px solid var(--velvet-card);
+            padding: 16px 32px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 30px;
+            cursor: pointer;
+            width: 100%;
+            outline: none;
+            box-shadow: 0 5px 15px rgba(243, 124, 180, 0.4);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
 
-            .spin-btn:active {
-                transform: scale(0.97);
-            }
+        .spin-btn:active {
+            transform: scale(0.97);
+        }
 
-            .spin-btn:disabled {
-                background: #e0b6ca;
-                box-shadow: none;
-                opacity: 0.7;
-            }
+        .spin-btn:disabled {
+            background: #e0b6ca;
+            box-shadow: none;
+            opacity: 0.7;
+        }
 
-            .glitter {
-                position: absolute;
-                width: 8px;
-                height: 8px;
-                opacity: 0;
-                top: -10px;
-                z-index: 1;
-                pointer-events: none;
-                border-radius: 50%;
-                animation: fall linear forwards;
-            }
+        .glitter {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            opacity: 0;
+            top: -10px;
+            z-index: 1;
+            pointer-events: none;
+            border-radius: 50%;
+            animation: fall linear forwards;
+        }
 
-            @keyframes fall {
-                0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-                90% { opacity: 1; }
-                100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
-            }
-        </style>
-    </head>
-    <body>
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
 
-        <div class="container">
-            <header>
-                <button class="clear-btn" id="clearBtn" title="Verlauf löschen">⚙️</button>
-                <h1>Coco's Jokes</h1>
-                <p>Smarter Humor</p>
-                <div class="counter-badge" id="counterDisplay">0 / 100 Witze gesehen</div>
-            </header>
+    <div class="container">
+        <header>
+            <button class="clear-btn" id="clearBtn" title="Verlauf löschen">⚙️</button>
+            <h1>Coco's Jokes</h1>
+            <p>Echte Witze zum Erzählen</p>
+            <div class="counter-badge" id="counterDisplay">0 / 100 Witze gesehen</div>
+        </header>
 
-            <div class="wheel-container">
-                <div class="wheel-pointer"></div>
-                <div class="wheel" id="luckyWheel"></div>
-                <div class="wheel-center"></div>
-            </div>
-
-            <div class="joke-card">
-                <span class="category-badge" id="categoryBadge">Bienvenue</span>
-                <p class="joke-text" id="jokeText">Bereit für ein Lächeln? Drehe das Rad für einen guten Witz!</p>
-            </div>
-
-            <div class="controls">
-                <button class="spin-btn" id="spinBtn">Rad drehen</button>
-            </div>
+        <div class="wheel-container">
+            <div class="wheel-pointer"></div>
+            <div class="wheel" id="luckyWheel"></div>
+            <div class="wheel-center"></div>
         </div>
 
-        <script>
-            const jokesDatabase = [
-                { id: 1, cat: "Alltag", text: "Mein Fitnesstrainer hat gesagt, ich soll den Tag mit Dehnübungen beginnen.\n\nIch habe mich jetzt erst mal von 08:00 auf 09:30 Uhr gedehnt." },
-                { id: 2, cat: "Weisheit", text: "Erfahrung ist die Summe aller Fehler, die man machen durfte, ohne sich dabei erwischen zu lassen." },
-                { id: 3, cat: "Büro", text: "Chef: 'Sie sind diese Woche schon dreimal zu spät gekommen! Was schlussfolgern Sie daraus?'\n\nAngestellter: 'Es ist bereits Donnerstag!'" },
-                { id: 4, cat: "Modern Life", text: "Ich habe heute versucht, meine Probleme zu ertränken.\n\nAber meine Familie kann einfach verdammt gut schwimmen." },
-                { id: 5, cat: "Gastronomie", text: "Gast zum Kellner: 'Zahlen, bitte!'\nKellner: 'Gerne. Drei, acht, fünfzehn, einundzwanzig...'\n\nGast: 'Nein, ich möchte die Rechnung!'\nKellner: 'Ach so, ich dachte wir spielen Bingo.'" },
-                { id: 6, cat: "Ehe & Co", text: "Meine Frau beschwerte sich, dass ich ihr nie zuhöre.\n\nOder so ähnlich, ich war ehrlich gesagt etwas abgelenkt." },
-                { id: 7, cat: "Kommunikation", text: "Ironie ist, wenn man eine Nacht darüber schläft, um am nächsten Tag noch wütender zu sein." },
-                { id: 8, cat: "Büro", text: "Ein optimistisch gestimmter Mitarbeiter ist meistens nur schlecht informiert." },
-                { id: 9, cat: "Klassiker", text: "Treffen sich zwei Statiker. Sagt der eine: 'Und, wie läuft's?'\n\nSagt der andere: 'Schwankt so vor sich hin.'" },
-                { id: 10, cat: "Logik", text: "Die ersten 40 Jahre der Kindheit sind bekanntlich die schwersten." },
-                { id: 11, cat: "Alltag", text: "Ich habe gestern beschlossen, dem inneren Schweinehund die Freundschaft zu kündigen.\n\nJetzt hat er das alleinige Sorgerecht für die Couch beantragt." },
-                { id: 12, cat: "Small Talk", text: "Gespräch unter Nachbarn:\n'Ihr Hund hat gestern meinen Rasenmäher gebissen!'\n\n'Das kann gar nicht sein, mein Hund hat überhaupt keine Zähne.'\n'Ja, aber Sie haben ihm mein Gebiss geliehen!'" },
-                { id: 13, cat: "Psychologie", text: "Man sollte viel öfter einfach mal tief durchatmen – und wenn es nur ist, um der Gegenseite nicht direkt an die Gurgel zu gehen." },
-                { id: 14, cat: "Zeitgeist", text: "Früher ging ich einkaufen, wenn der Kühlschrank leer war.\n\nHeute gehe ich einkaufen, wenn der Akku vom Smartphone voll genug für die Einkaufsliste ist." },
-                { id: 15, cat: "Konversation", text: "Das Schöne an sarkastischen Menschen ist, dass man nie genau weiß, ob sie einen gerade loben oder dezent beleidigen." },
-                { id: 16, cat: "Lebenskunst", text: "Ich bin heute extrem motiviert. Allerdings hält diese Motivation nur so lange an, bis ich mich bewege." },
-                { id: 17, cat: "Alltag", text: "Ich habe mir ein neues Kochbuch gekauft. Das erste Rezept lautet: 'Man nehme einen sauberen Topf.'\n\nAb da wurde es mir ehrlich gesagt zu unrealistisch." },
-                { id: 18, cat: "Büro", text: "Ich arbeite immer mit vollem Einsatz!\n\nMontags 20 %, dienstags 30 %, mittwochs 30 %, donnerstags 15 % und freitags die restlichen 5 %." },
-                { id: 19, cat: "Weisheit", text: "Man muss kein Genie sein, um zu merken, dass das Leben viel einfacher ist, wenn man die Erwartungen an andere auf Null herunterschraubt." },
-                { id: 20, cat: "Technik", text: "Das Smartphone hat uns die Freiheit geschenkt, von absolut überall auf der Welt aus ignoriert werden zu können." },
-                { id: 21, cat: "Ehe & Co", text: "Meine Frau wollte mehr Romantik. Ich habe ihr daraufhin im Kerzenschein erklärt, warum die Steuererklärung dieses Jahr später kommt." },
-                { id: 22, cat: "Gastronomie", text: "Im Restaurant: 'Herr Ober, das Messer ist stumpf und das Fleisch zäh!'\n\n'Da haben Sie aber Glück gehabt. Stellen Sie sich mal vor, es wäre umgekehrt!'" },
-                { id: 23, cat: "Gute Frage", text: "Wenn die Stiftung Warentest eine Decke testet, ist das dann eigentlich eine Steppdecke?" },
-                { id: 24, cat: "Alltag", text: "Ich besitze jetzt ein Gerät, das mir täglich sagt, wie viele Schritte ich gelaufen bin.\n\nMein Sofa nennt es liebevoll: 'Den Verräter'." },
-                { id: 25, cat: "Logik", text: "Natürlich rede ich manchmal mit mir selbst. Man braucht im Leben eben ab und zu eine kompetente Beratung." },
-                { id: 26, cat: "Büro", text: "Teamwork bedeutet hier vor allem: Ein Kollege sucht die Arbeit, die anderen teilen sie sich auf, damit niemand etwas damit zu tun haben muss." },
-                { id: 27, cat: "Erkenntnis", text: "Man merkt, dass man älter wird, wenn die gemütlichen Abende auf der Couch keine Ausnahme mehr sind, sondern die persönliche Hauptbeschäftigung." },
-                { id: 28, cat: "Alltag", text: "Ich habe heute beim Aufräumen eine alte To-Do-Liste von 2021 gefunden.\n\nIch bin stolz zu sagen: Drei Dinge davon haben sich inzwischen von ganz alleine erledigt." },
-                { id: 29, cat: "Gesundheit", text: "Mein Arzt sagt, ich solle meinen Kaffee-Konsum reduzieren.\n\nIch suche jetzt erst mal einen Arzt, der weniger pessimistisch eingestellt ist." },
-                { id: 30, cat: "Kommunikation", text: "Diplomatie ist die Kunst, jemanden so elegant zum Teufel zu schicken, dass er sich auf die Reise freut." },
-                { id: 31, cat: "Finanzen", text: "Geld allein macht definitiv nicht glücklich. Man sollte zusätzlich schon noch ein paar Aktien und Immobilien besitzen." },
-                { id: 32, cat: "Alltag", text: "Ich bin heute Morgen aufgewacht, habe die Arme ausgestreckt, die Knie gebeugt und die Gelenke knacken lassen.\n\nMein Körper klingt mittlerweile wie eine Schüssel Knuspermüsli." },
-                { id: 33, cat: "Zeitgeist", text: "Manchmal schaue ich mir die Preise für Wohnungen an und beschließe spontan, einfach unsterblich zu werden, damit sich die Miete langfristig amortisiert." },
-                { id: 34, cat: "Büro", text: "Es gibt Tage, da ist mein größtes Talent im Büro schlichtweg die Tatsache, dass ich niemanden laut anschreie." },
-                { id: 35, cat: "Ehe & Co", text: "Wir haben ein neues Abkommen zu Hause: Ich treffe die großen, weltbewegenden Entscheidungen und meine Frau entscheidet, welche das genau sind." },
-                { id: 36, cat: "Small Talk", text: "Warum schaust du eigentlich so traurig?\n\n'Ich habe vorhin meine Traumfrau getroffen.'\n'Und, warum bist du dann traurig?'\n'Sie hat mich leider nicht getroffen.'" },
-                { id: 37, cat: "Weisheit", text: "Man sollte den Tag nicht vor dem Abend loben. Vor allem nicht, wenn man noch vorhat, das Haus zu verlassen." },
-                { id: 38, cat: "Alltag", text: "Ich habe mir vorgenommen, mich gesünder zu ernähren. Die Schokolade liegt jetzt im obersten Regalfach. Ich nenne es: 'Das Workout'." },
-                { id: 39, cat: "Logik", text: "Wer im Glashaus sitzt, sollte sich im Dunkeln umziehen." },
-                { id: 40, cat: "Erkenntnis", text: "Das Problem mit dem gesunden Menschenverstand ist leider, dass er nicht allzu weit verbreitet ist." },
-                { id: 41, cat: "Lebensphilosophie", text: "Ich plane nicht im Voraus. Jedes Mal, wenn ich das tue, grinst das Universum und holt die versteckte Kamera raus." },
-                { id: 42, cat: "Büro", text: "Ich kam heute morgen hochmotiviert ins Büro. Aber nach zwei Minuten stellte sich heraus, dass der Kaffeeautomat kaputt ist. Game over." },
-                { id: 43, cat: "Zeitmanagement", text: "Pünktlichkeit ist die Kunst, richtig einzuschätzen, wie viel Verspätung der andere haben wird." },
-                { id: 44, cat: "Finanzen", text: "Am Ende des Geldes ist einfach noch erschreckend viel Monat übrig." },
-                { id: 45, cat: "Modern Life", text: "Ich habe heute versucht, Multitasking zu machen. Jetzt brennt das Wasser und die Spülmaschine schickt mir Push-Nachrichten." },
-                { id: 46, cat: "Logik", text: "Wenn man nachts nichts essen soll, warum gibt es dann bitteschön eine kleine Lampe im Kühlschrank?" },
-                { id: 47, cat: "Ehe & Co", text: "Beziehungsstatus: Wir teilen uns die Decke im Bett jetzt nach einem sehr komplexen, nonverbalen Kampfsport-System auf." },
-                { id: 48, cat: "Shopping", text: "Ich bin in einem Alter, in dem mich ein stabiler, gut organisierter Baumarkt emotional tief berührt." },
-                { id: 49, cat: "Kommunikation", text: "Manchmal antworte ich erst nach drei Tagen auf Nachrichten, weil ich die Konversation gedanklich schon komplett und sehr harmonisch abgeschlossen hatte." },
-                { id: 50, cat: "Alltag", text: "Natürlich treibe ich Sport. Ich laufe mehrmals am Tag Gefahr, völlig die Beherrschung zu verlieren." },
-                { id: 51, cat: "Büro", text: "Mein Job macht mir richtig Spaß. Nur die acht Stunden zwischen dem Kommen und dem Gehen könnten etwas entspannter sein." },
-                { id: 52, cat: "Weisheit", text: "Man soll ja den Tag positiv beginnen. Ich bin heute morgen zumindest schon mal nicht über das Netzkabel gestolpert." },
-                { id: 53, cat: "Modern Life", text: "Ich habe beschlossen, nur noch biologisch abbaubaren Stress an mich heranzulassen." },
-                { id: 54, cat: "Small Talk", text: "Ich habe ein tolles Rezept für kalte Tage: Einfach die Heizung aufdrehen und so tun, als hätte man gekocht." },
-                { id: 55, cat: "Alltag", text: "Ich bin kein Morgenmensch. Ich bin nicht mal ein Vormittagsmensch. Eigentlich bin ich erst ab dem späten Nachmittag sozial kompatibel." },
-                { id: 56, cat: "Zeitgeist", text: "Wir leben in einer Welt, in der Passwörter sicherer sein müssen als die gesamte globale Infrastruktur, aber wir sie auf Post-its schreiben." },
-                { id: 57, cat: "Gastronomie", text: "Im Café: 'Ist dieser Kuchen laktosefrei, glutenfrei und vegan?'\n\n'Ja, das ist eine Serviette.'" },
-                { id: 58, cat: "Ehe & Co", text: "Wenn meine Frau sagt: 'Wir müssen reden', läuft mir ein kalter Schauer über den Rücken – selbst wenn ich weiß, dass ich unschuldig bin." },
-                { id: 59, cat: "Logik", text: "Das Wort 'Ernährungsplan' fängt nicht umsonst mit 'Er' an. Weil es meistens schiefgeht." },
-                { id: 60, cat: "Finanzen", text: "Ich habe mein Budget für diesen Monat überprüft. Wenn ich ab morgen aufhöre zu atmen, komme ich finanziell perfekt hin." },
-                { id: 61, cat: "Alltag", text: "Ich wollte heute produktiv sein, aber das Bett hat mich einfach als Geisel genommen. Es war Stockholm-Syndrom vom Feinsten." },
-                { id: 62, cat: "Büro", text: "Ein Meeting ist der perfekte Ort, um Leuten dabei zuzusehen, wie sie Arbeit beschreiben, die sie eigentlich tun sollten." },
-                { id: 63, cat: "Weisheit", text: "Nichts stabilisiert die mentale Gesundheit so sehr wie der feste Entschluss, dass die Meinung anderer einem schlichtweg egal ist." },
-                { id: 64, cat: "Modern Life", text: "Ich habe meine Smartwatch weggesperrt. Ich lasse mir doch nicht von einem Stück Silikon sagen, dass ich mich heute zu wenig bewegt habe." },
-                { id: 65, cat: "Kommunikation", text: "Das Wort 'Mhm' ist das Schweizer Taschenmesser der deutschen Sprache. Es passt einfach immer." },
-                { id: 66, cat: "Alltag", text: "Meine Ausdauer reicht derzeit genau vom Kühlschrank bis zur Couch. Und selbst da lege ich manchmal eine strategische Pause ein." },
-                { id: 67, cat: "Erkenntnis", text: "Man weiß, dass man erwachsen ist, wenn man sich auf ein neues Set sauberer Putzlappen freut." },
-                { id: 68, cat: "Technik", text: "Mein Staubsauger-Roboter hat sich im Badezimmer eingesperrt und weigert sich rauszukommen. Er spiegelt meine Work-Life-Balance perfekt wider." },
-                { id: 69, cat: "Ehe & Co", text: "Wir streiten uns nie. Wir führen lediglich temporäre, akustisch intensivierte Optimierungsgespräche." },
-                { id: 70, cat: "Zeitgeist", text: "Früher hatten wir Geheimnisse. Heute haben wir eine Datenschutzerklärung, die sowieso niemand liest." },
-                { id: 71, cat: "Büro", text: "Der Kaffee im Büro schmeckt heute wieder so, als hätte der Koch die Bohne nur von Weitem gegrüßt." },
-                { id: 72, cat: "Alltag", text: "Ich habe heute versucht, meine Komfortzone zu verlassen. Es war kalt, windig und die Leute waren unhöflich. Bin wieder zurück." },
-                { id: 73, cat: "Logik", text: "Wer schläft, sündigt nicht. Wer vorher sündigt, schläft allerdings deutlich besser." },
-                { id: 74, cat: "Finanzen", text: "Ich habe jetzt ein Online-Sparkonto eingerichtet. Es sorgt dafür, dass mein Geld digital und vollkommen unbemerkt verschwindet." },
-                { id: 75, cat: "Weisheit", text: "Man sollte immer ein bisschen Platz im Kopf frei halten – für die absoluten Dummheiten, die das Leben erst lebenswert machen." },
-                { id: 76, cat: "Modern Life", text: "Ich habe heute ein Software-Update auf meinem Kühlschrank installiert. Jetzt weigert er sich, vor 22 Uhr Kohlenhydrate freizugeben." },
-                { id: 77, cat: "Small Talk", text: "Ich bin heute so müde, ich könnte eine gesamte Kanne Kaffee einfach intravenös gebrauchen." },
-                { id: 78, cat: "Alltag", text: "Das Einzige, was bei mir im Haushalt im Moment wirklich tadellos läuft, ist die Nase." },
-                { id: 79, cat: "Büro", text: "Ich habe heute im Homeoffice die Kamera angelassen. Die Kollegen wissen jetzt zumindest, dass ich eine sehr schöne Pyjamahose besitze." },
-                { id: 80, cat: "Erkenntnis", text: "Lebenserfahrung bedeutet, dass man genau weiß, welche Ausrede man parat haben muss, um eine Einladung abzusagen." },
-                { id: 81, cat: "Zeitgeist", text: "Mein Akku ist schneller leer als meine Geduld – und das will im Moment wirklich einiges heißen." },
-                { id: 82, cat: "Ehe & Co", text: "Mein Partner sagt, ich sei stur. Ich sehe das völlig anders und werde meine Meinung dazu auch unter Androhung von Gewalt niemals ändern." },
-                { id: 83, cat: "Gastronomie", text: "Ein Kellner bringt die Suppe und hat den Daumen drin. Gast: 'Sagen Sie mal!'\nKellner: 'Keine Sorge, die Suppe ist gar nicht mehr so heiß.'" },
-                { id: 84, cat: "Logik", text: "Man kann nicht alles haben im Leben. Wo sollte man den ganzen Kram denn auch bitteschön lagern?" },
-                { id: 85, cat: "Alltag", text: "Ich habe heute beschlossen, ein wenig Achtsamkeit zu praktizieren. Nach pfünf Minuten ist mir aufgefallen, wie laut meine Nachbarn atmen." },
-                { id: 86, cat: "Büro", text: "Ich bin heute der Fels in der Brandung. Ich bewege mich kein Stück und lasse alles über mich ergehen." },
-                { id: 87, cat: "Weisheit", text: "Geduld ist eine Tugend. Aber manchmal ist ein lautes, gepflegtes Fluchen einfach wesentlich effektiver." },
-                { id: 88, cat: "Modern Life", text: "Wenn mein Paketbote mich öfter sieht als meine engen Freunde, sollten wir vielleicht mal über unsere Beziehungsdefinition sprechen." },
-                { id: 89, cat: "Finanzen", text: "Ich spare im Moment an allen Ecken und Enden. Hauptsächlich an den Enden, da ist es am einfachsten." },
-                { id: 90, cat: "Alltag", text: "Ich habe ein neues Sportoutfit gekauft. Es sieht auf dem Sessel neben dem Bett wirklich unheimlich sportlich aus." },
-                { id: 91, cat: "Kommunikation", text: "Ein 'Aha' im richtigen Tonfall kann eine ganze philosophische Abhandlung über die Inkompetenz des Gegenübers ersetzen." },
-                { id: 92, cat: "Zeitgeist", text: "Früher haben wir uns Sorgen um die Zukunft gemacht. Heute sind wir froh, wenn das WLAN stabil bleibt." },
-                { id: 93, cat: "Ehe & Co", text: "Liebe ist, wenn man dem anderen das letzte Stück Pizza überlässt, obwohl man selbst noch hungrig ist – und es ihm danach wochenlang vorwirft." },
-                { id: 94, cat: "Büro", text: "Ich habe heute einen Zettel mit der Aufschrift 'Wichtig' weggeschmissen. Das Risiko erhöht den Puls ungemein." },
-                { id: 95, cat: "Logik", text: "Wenn man im Wörterbuch nach dem Wort 'Motivation' sucht, findet man da im Moment höchstens ein Bild von meiner Couch." },
-                { id: 96, cat: "Alltag", text: "Ich habe heute die Fenster geputzt. Jetzt sehe ich die Probleme da draußen viel schärfer." },
-                { id: 97, cat: "Small Talk", text: "Ich habe heute ein Kompliment bekommen. Jemand meinte, ich sähe sehr entspannt aus. Ich war eigentlich nur zu müde, um mein Gesicht zu bewegen." },
-                { id: 98, cat: "Finanzen", text: "Geld verdirbt den Charakter. Zum Glück bin ich finanziell absolut charakterfest geschützt." },
-                { id: 99, cat: "Weisheit", text: "Der klügere gibt so lange nach, bis er der Dumme ist. Deswegen halte ich jetzt einfach direkt dagegen." },
-                { id: 100, cat: "Erkenntnis", text: "Herzlichen Glückwunsch! Du hast das Ende der Witze erreicht. Du bist jetzt offiziell maximal tiefenentspannt." }
-            ];
+        <div class="joke-card">
+            <span class="category-badge" id="categoryBadge">Bienvenue</span>
+            <p class="joke-text" id="jokeText" style="text-align: center;">Bereit für eine gute Geschichte? Drehe das Rad!</p>
+        </div>
 
-            let currentRotation = 0;
-            const btn = document.getElementById('spinBtn');
-            const clearBtn = document.getElementById('clearBtn');
-            const wheel = document.getElementById('luckyWheel');
-            const categoryBadge = document.getElementById('categoryBadge');
-            const jokeText = document.getElementById('jokeText');
-            const counterDisplay = document.getElementById('counterDisplay');
+        <div class="controls">
+            <button class="spin-btn" id="spinBtn">Rad drehen</button>
+        </div>
+    </div>
 
-            function getSeenJokes() {
-                const seen = localStorage.getItem('cocos_seen_jokes');
-                return seen ? JSON.parse(seen) : [];
+    <script>
+        const jokesDatabase = [
+            { id: 1, cat: "Klassiker", text: "Drei Männer stranden auf einer einsamen Insel. Eines Tages finden sie eine Wunderlampe. Sie reiben daran und ein Dschinn erscheint: 'Ihr habt drei Wünsche frei, jeder einen.'\n\nDer Erste sagt: 'Ich vermisse meine Familie so sehr. Ich wünsche mich nach Hause!' – *Puff*, er ist weg.\n\nDer Zweite sagt: 'Ich halte das Leben hier nicht mehr aus. Ich wünsche mich auch sofort nach Hause!' – *Puff*, er ist weg.\n\nDer Dritte schaut sich um, seufzt tief und sagt: 'Mensch, jetzt ist es hier aber ganz schön einsam geworden... Ich wünsche mir meine beiden Kumpels zurück!'" },
+            { id: 2, cat: "Arzt", text: "Ein Patient kommt völlig aufgelöst zum Arzt: 'Herr Doktor, Herr Doktor! Sie müssen mir helfen. Ich glaube, ich bin unsichtbar!'\n\nDer Arzt schaut kurz von seinen Papieren auf, blickt ins leere Wartezimmer, ruft laut: 'Der Nächste bitte!' und arbeitet seelenruhig weiter." },
+            { id: 3, cat: "Tiere", text: "Ein Mann geht mit einem Pinguin an der Leine in der Innenstadt spazieren. Ein Polizist sieht das, schüttelt den Kopf und sagt: 'Sagen Sie mal, das geht doch so nicht! Gehen Sie mit dem Tier sofort in den Zoo!'\n\nAm nächsten Tag trifft der Polizist den Mann wieder – immer noch mit dem Pinguin an der Hand. Der Polizist schimpft: 'Ich habe Ihnen doch gestern gesagt, Sie sollen in den Zoo gehen!'\n\nDer Mann lächelt entspannt: 'Waren wir doch gestern auch! Heute gehen wir zusammen ins Kino.'" },
+            { id: 4, cat: "Kneipe", text: "Ein Mann kommt völlig deprimiert in eine Kneipe, setzt sich an die Bar und bestellt ein Bier. Der Barkeeper fragt mitfühlend: 'Was ist denn los mit Ihnen?'\n\nDer Mann seufzt: 'Ach, meine Frau hat mir geschworen, dass sie einen ganzen Monat lang nicht mehr mit mir spricht.'\n\nDer Barkeeper schaut überrascht: 'Aber das ist doch eigentlich fantastisch! Warum sind Sie denn dann so traurig?'\n\nDer Mann schaut auf: 'Weil heute der letzte Tag des Monats ist...'" },
+            { id: 5, cat: "Gastronomie", text: "Ein Gast sitzt im Restaurant und winkt den Kellner zu sich heran: 'Herr Ober, schmecken Sie mal bitte diese Suppe!'\n\nDer Kellner schaut pikiert: 'Gibt es ein Problem mit der Suppe? Ist sie etwa zu kalt?'\n\nGast: 'Schmecken Sie sie einfach!'\n\nKellner: 'Fehlt vielleicht Salz? Ist sie versalzen?'\n\nGast: 'Schmecken Sie die Suppe!'\n\nDer Kellner gibt schließlich nach, beugt sich über den Tisch und fragt irritiert: 'Gut, ich würde sie ja probieren... aber wo ist denn eigentlich der Löffel?'\n\nDer Gast lächelt triumphierend: 'Aha! Merken Sie was?!'" },
+            { id: 6, cat: "Verkehr", text: "Ein Autofahrer wird mitten in der Nacht von der Polizei angehalten. Der Polizist tritt an das Fenster und fragt streng: 'Haben Sie Alkohol getrunken?'\n\nDer Fahrer antwortet ruhig: 'Nein, absolut keinen Tropfen.'\n\nDer Polizist schaut skeptisch auf den Beifahrersitz: 'Und warum fliegt dann da eine leere Schnapsflasche im Fußraum herum?'\n\nDer Fahrer seufzt: 'Ach Herr Wachtmeister, ich habe die Flasche nur als Abstandshalter benutzt, damit die vollen Flaschen hinten im Kofferraum nicht so laut aneinanderklappern!'" },
+            { id: 7, cat: "Ehe", text: "Eine Frau wacht mitten in der Nacht auf und stellt fest, dass ihr Ehemann nicht im Bett liegt. Sie geht nach unten und findet ihn in der dunklen Küche. Er sitzt am Tisch, starrt auf eine Tasse Kaffee und wischt sich eine Träne aus dem Auge.\n\nSie fragt besorgt: 'Was ist denn los, Schatz?'\n\nEr schaut auf: 'Erinnerst du dich noch an vor 20 Jahren, als wir uns heimlich getroffen haben? Und als dein Vater uns erwischt hat und meinte: Entweder du heiratest meine Tochter oder du wanderst für 20 Jahre ins Gefängnis?'\n\nSie lächelt gerührt: 'Ja, natürlich erinnere ich mich.'\n\nEr schluchzt: 'Siehst du... Heute wäre ich entlassen worden!'" },
+            { id: 8, cat: "Büro", text: "Der Chef geht durch die Abteilungen und sieht einen jungen Mann, der lässig an der Wand lehnt und gelangweilt auf sein Smartphone starrt. Der Chef, der sowieso schlechte Laune hat, will ein Exempel statuieren.\n\nEr geht schnurstracks auf den Mann zu und fragt laut: 'Was verdienen Sie eigentlich im Monat?!'\n\nDer junge Mann schaut überrascht und antwortet: 'Knapp 2.000 Euro, warum?'\n\nDer Chef zieht seine Geldbörse heraus, zählt bar 2.000 Euro auf die Hand und schreit: 'Hier ist Ihr Monatslohn! Und jetzt packen Sie sofort Ihre Sachen und ich will Sie hier nie wieder sehen!'\n\nDer Mann nimmt das Geld, zuckt mit den Achseln und geht. Der Chef dreht sich triumphierend zu den restlichen Mitarbeitern um: 'So! Und kann mir jetzt mal jemand sagen, aus welcher Abteilung dieser faule Sack eigentlich war?'\n\nFlüstert eine Kollegin: 'Aus gar keiner... Das war der Pizzabote, der auf die leeren Kartons gewartet hat.'" },
+            { id: 9, cat: "Himmel", text: "Drei Männer sterben bei einem Unfall und kommen gleichzeitig an die Himmelspforte. Petrus empfängt sie und sagt: 'Wir haben hier im Himmel eine einzige, strikte Regel: Tretet niemals auf die Enten! Sie sind überall und wenn ihr auf eine tretet, macht das ein furchtbares Geräusch.'\n\nDie Männer passen höllisch auf, aber schon nach zwei Tagen tritt der erste Mann versehentlich auf eine Ente. Sofort kommt Petrus angestürmt, führt eine unglaublich hässliche Frau an der Hand und kettet die beiden mit Handschellen aneinander: 'Das ist deine Strafe für die Ewigkeit!'\n\nAm nächsten Tag passiert es dem zweiten Mann. Petrus kommt, hat eine noch hässlichere Frau dabei und kettet sie aneinander.\n\nDer dritte Mann ist schockiert und passt wochenlang extrem auf, wohin er tritt. Nach drei Monaten hat er es geschafft, keine einzige Ente zu berühren. Plötzlich kommt Petrus zu ihm gelaufen, im Schlepptau eine absolute Traumfrau, bildschön und atemberaubend. Petrus kettet die beiden wortlos aneinander und geht.\n\nDer Mann schaut die Frau überglücklich an und stammelt: 'Ich kann es nicht fassen... Was habe ich bloß getan, um so ein unendliches Glück zu verdienen?'\n\nDie Frau seufzt genervt: 'Ich weiß ja nicht, was du getan hast – aber ich bin vorhin auf eine blöde Ente getreten!'" },
+            { id: 10, cat: "Alltag", text: "Ein älteres Ehepaar sitzt im Wohnzimmer. Plötzlich sagt die Frau: 'Du, Harald, mir ist aufgefallen, dass du mir schon seit Jahren keine Komplimente mehr machst. Früher hast du immer gesagt, ich hätte Haare wie Seide und Augen wie Sterne.'\n\nHarald schaut kurz über den Rand seiner Zeitung, überlegt kurz und sagt trocken: 'Na ja, die Haare sind ja auch dünner geworden und die Augen tränken halt öfter.'" },
+            { id: 11, cat: "Sport", text: "Ein Mann beschließt, endlich mal wieder etwas für seine Fitness zu tun, und geht das erste Mal ins Fitnessstudio. Er schaut sich völlig überfordert um und geht schließlich zu einem der Trainer.\n\n'Sagen Sie mal', fragt er den Trainer, 'ich möchte unbedingt die Frauen hier beeindrucken. Welches Gerät im Studio soll ich denn da am besten benutzen?'\n\nDer Trainer schaut ihn von oben bis unten an, deutet auf die Glasfront und sagt: 'Ich würde Ihnen ganz dringend den Geldautomaten da draußen auf der Straße empfehlen.'" },
+            { id: 12, cat: "Kneipe", text: "Ein Mann kommt in eine Bar, setzt sich und bestellt drei Gläser Bier auf einmal. Er trinkt abwechselnd aus jedem Glas einen Schluck, bis alle leer sind. Das macht er jeden Tag.\n\nNach einer Woche fragt der Barkeeper neugierig: 'Warum bestellen Sie eigentlich immer drei Biere gleichzeitig, statt sie nacheinander frisch zu trinken?'\n\nDer Mann lächelt: 'Wissen Sie, ich habe zwei Brüder. Einer lebt in Amerika, der andere in Australien. Wir haben uns geschworen, dass wir beim Trinken immer aneinander denken. Das hier sind die Biere für meine Brüder und das ist mein eigenes.'\n\nEin paar Monate später kommt der Mann wieder, bestellt aber diesmal nur zwei Biere. Der Barkeeper wird ganz blass und sagt leise: 'Oh nein... Mein herzliches Beileid. Ist einem Ihrer Brüder etwas zugestoßen?'\n\nDer Mann schaut überrascht, lacht dann auf und sagt: 'Ach Quatsch, den Jungs geht es blendend! Aber mein Arzt hat mir strengstens verboten, ab heute noch Alkohol zu trinken!'" },
+            { id: 13, cat: "Schule", text: "Der Lehrer möchte im Biologieunterricht die Sinne erklären und fragt in die Runde: 'Wer kann mir ein Beispiel dafür nennen, wie sich zwei Sinne gegenseitig beeinflussen?'\n\nDer kleine Fritzchen meldet sich sofort und sagt: 'Das ist ganz einfach, Herr Lehrer! Wenn man zum Beispiel eine Zwiebel isst, schmeckt das Auge mit.'\n\nDer Lehrer schaut verwirrt: 'Wie meinst du das denn? Warum sollte das Auge mitschmecken?'\n\nFritzchen nickt überzeugt: 'Na, weil einem doch sofort die Tränen kommen!'" },
+            { id: 14, cat: "Gericht", text: "Ein Mann steht wegen Diebstahls vor Gericht. Der Richter schaut streng auf die Akten und fragt den Angeklagten: 'Sie haben also mitten am hellichten Tag die goldene Uhr aus dem Schaufenster des Juweliers gestohlen. Wie konnten Sie nur glauben, dass das niemand bemerkt?'\n\nDer Angeklagte zuckt mit den Achseln: 'Na ja, Herr Richter, an der Scheibe hing ein großes Schild auf dem stand: *Nutzen Sie die Gelegenheit!*' und da dachte ich mir eben, man soll Gelegenheiten im Leben beim Schopfe packen.'" },
+            { id: 15, cat: "Reisen", text: "Ein Tourist macht Urlaub in einem kleinen, abgelegenen Dorf in den Bergen. Er geht in die einzige Dorfkneipe und fragt den Wirt neugierig: 'Sagen Sie mal, wie ist denn das Wetter hier im Winter so im Durchschnitt?'\n\nDer Wirt überlegt kurz, wischt den Tresen ab und sagt: 'Ach, eigentlich ganz angenehm. Der Schnee liegt meistens recht ruhig und stabil.'" },
+            { id: 16, cat: "Arzt", text: "Ein älterer Herr geht zum Arzt, weil er Probleme mit dem Gehör hat. Der Arzt untersucht ihn gründlich, holt ein Rezeptbuch heraus, schreibt etwas auf und sagt: 'So, dieses Medikament nehmen Sie jetzt bitte dreimal täglich nach dem Essen.'\n\nDer Patient schaut den Arzt dankbar an, nimmt den Zettel und fragt: 'Und Herr Doktor, werde ich davon denn auch wirklich wieder besser hören können?'\n\nDer Arzt schüttelt den Kopf: 'Nein, das nicht. Aber das Medikament sorgt dafür, dass Ihnen das, was die Leute so erzählen, absolut egal wird.'" },
+            { id: 17, cat: "Tiere", text: "Zwei Frösche sitzen am Teich, als es plötzlich wie aus Eimern anfängt zu regnen. Der eine Frosch schaut ganz erschrocken zum Himmel, springt sofort mit einem weiten Satz ins Wasser und ruft dem anderen zu: 'Schnell, komm rein, sonst werden wir hier draußen noch klatschnass!'" },
+            { id: 18, cat: "Handwerker", text: "Ein Mann ruft völlig verzweifelt beim Klempner an: 'Kommen Sie bitte sofort vorbei! Bei uns im Keller ist ein Rohr gebrochen, das Wasser steht uns schon bis zu den Knöcheln!'\n\nDer Klempner antwortet völlig tiefenentspannt: 'Machen Sie sich mal keine Sorgen. Atmen Sie tief durch. Ich bin morgen früh um acht Uhr direkt bei Ihnen.'\n\nDer Mann schreit in den Hörer: 'Morgen früh erst?! Bis dahin sind wir doch längst ertrunken!'\n\nDer Klempner seufzt: 'Na ja, aber bis morgen früh hat das Wasser dann wenigstens eine angenehme Arbeitshöhe für mich erreicht.'" },
+            { id: 19, cat: "Ehe", text: "Ein Ehepaar feiert seine goldene Hochzeit. Beim Frühstück schaut die Frau ihren Mann zärtlich an und denkt sich: *Seit 50 Jahren schneide ich nun jeden Morgen das Brot ab und gebe ihm die obere, knusprige Hälfte, weil ich weiß, wie sehr er sie mag. Heute will ich mir mal selbst etwas Gutes tun.* Sie schneidet das Brot durch und behält die obere Hälfte für sich.\n\nIhr Mann schaut auf, strahlt über das ganze Gesicht und küsst ihr die Hand: 'Ach Liebling, du glaubst gar nicht, was für eine unendliche Freude du mir heute machst! Seit genau 50 Jahren hasse ich die obere, harte Kruste, habe sie aber jeden Morgen brav gegessen, weil ich dachte, dass du mir die weiche Unterseite nicht gönnst!'" },
+            { id: 20, cat: "Beruf", text: "Ein Bewerber sitzt im Vorstellungsgespräch für eine Führungsposition. Der Personalleiter schaut auf den Lebenslauf und fragt: 'Hier steht, dass Sie in Ihrem alten Job unter extremem Druck gearbeitet haben. Können Sie mir ein Beispiel dafür nennen, wie Sie mit Stress umgehen?'\n\nDer Bewerber nickt lächelnd: 'Das ist ganz einfach. Wenn der Druck im Büro zu groß wurde, habe ich einfach mein Outlook so eingestellt, dass jede eingehende E-Mail automatisch ein lautes Meeresrauschen abspielt. Die Leute dachten immer, ich arbeite hochkonzentriert, während ich in Gedanken am Strand lag.'" },
+            { id: 21, cat: "Polizei", text: "Ein Polizist stoppt eine ältere Dame, die mit deutlich überhöhter Geschwindigkeit auf der Landstraße unterwegs war. Er tritt an den Wagen und sagt: 'Guten Tag. Ich habe Sie gerade mit 130 km/h gemessen. Darf ich mal Ihren Führerschein sehen?'\n\nDie Dame schaut unschuldig: 'Das wird leider schwierig, Herr Wachtmeister. Den habe ich nämlich vor fünf Jahren wegen Trunkenheit am Steuer abgenommen bekommen.'\n\nDer Polizist stutzt: 'Oh... zeigen Sie mir dann bitte die Fahrzeugpapiere.'\n\n'Habe ich auch nicht', sagt die Dame seelenruhig. 'Das Auto ist nämlich gestohlen. Der Besitzer liegt hinten im Kofferraum, den habe ich vorhin im Wald erschossen.'\n\nDer Polizist kriegt weiche Knie, weicht zwei Schritte zurück und funkt sofort die Zentrale an: 'Großalarm! Ich brauche dringend Verstärkung! Bewaffnete ältere Dame mit Leiche im Kofferraum!'\n\nInnerhalb von Minuten sperren fünf Streifenwagen die Straße ab. Der Einsatzleiter geht vorsichtig mit gezogener Waffe zum Auto der Dame: 'Hände aufs Lenkrad! Machen Sie sofort den Kofferraum auf!'\n\nDie Dame steigt kopfschüttelnd aus, öffnet den Kofferraum – er ist absolut leer. Der Einsatzleiter schaut verwirrt: 'Und wo sind die Fahrzeugpapiere und Ihr Führerschein?'\n\nDie Dame zieht beides ordentlich aus ihrer Handtasche und reicht es ihm. Der Einsatzleiter kratzt sich am Kopf: 'Aber mein Kollege hat mir gerade per Funk gemeldet, Sie hätten keinen Führerschein, das Auto sei gestohlen und Sie hätten eine Leiche im Heck!'\n\nDie Dame verdreht die Augen: 'Na wunderbar... Und ich wette, dieser unverschämte Lügner hat Ihnen auch noch erzählt, ich sei viel zu schnell gefahren!'" },
+            { id: 22, cat: "Klassiker", text: "Ein Bauer kauft sich einen neuen, sündhaft teuren Zuchtstier für seinen Hof. Nach ein paar Tagen kommt der Nachbar vorbei, lehnt sich an den Zaun und fragt neugierig: 'Na, wie macht sich denn der neue Prachtkerl so auf der Weide?'\n\nDer Bauer seufzt unzufrieden: 'Ach, hör mir bloß auf. Der guckt die Kühe nicht mal mit dem Hintern an. Der frisst nur Gras und schläft im Schatten. Ein absoluter Fehlkauf!'\n\nDer Nachbar überlegt: 'Vielleicht solltet ihr mal den Tierarzt holen.'\n\nZwei Wochen später treffen sich die beiden wieder. Der Bauer strahlt über das ganze Gesicht: 'Mensch, danke für den Tipp! Der Tierarzt war da und hat ihm ein paar Pillen gegeben. Seitdem ist der Stier nicht mehr zu bremsen. Er springt über jeden Zaun und jagt absolut jede Kuh im ganzen Umkreis!'\n\nDer Nachbar ist beeindruckt: 'Wahnsinn! Was waren das denn für Pillen?'\n\nDer Bauer zuckt mit den Achseln: 'Keine Ahnung, wie die heißen. Aber sie schmecken ganz leicht nach Pfefferminz!'" },
+            { id: 23, cat: "Kinder", text: "Die kleine Susi geht zu ihrer Mutter und fragt neugierig: 'Du Mama, sag mal, wie sind die Menschen eigentlich entstanden?'\n\nDie Mutter lächelt und erklärt geduldig: 'Weißt du, Gott hat zuerst Adam und Eva erschaffen, die beiden bekamen Kinder und so hat sich die Menschheit über die ganze Erde ausgebreitet.'\n\nZwei Tage später stellt Susi dieselbe Frage ihrem Vater. Der schaut von seinem Laptop auf und sagt: 'Na ja, das ist Evolution. Vor Millionen von Jahren gab es Affen, die haben sich immer weiterentwickelt, bis sie irgendwann so aussah wie wir heute.'\n\nSusi läuft völlig verwirrt zurück zur Mutter: 'Mama, du hast mich angelogen! Papa sagt, wir stammen alle von den Affen ab!'\n\nDie Mutter lächelt völlig gelassen: 'Ach Schätzchen, ich habe dich doch nicht angelogen. Ich habe dir lediglich von meiner Seite der Familie erzählt und Papa eben von seiner.'" },
+            { id: 24, cat: "Kneipe", text: "Ein Mann geht in eine Kneipe, setzt sich an einen Tisch und ruft dem Barkeeper zu: 'Schnell, bringen Sie mir ein großes Bier, bevor das Drama wieder losgeht!'\n\nDer Barkeeper zuckt mit den Achseln, zapft das Bier und bringt es ihm. Der Mann trinkt es in einem Zug leer und ruft sofort: 'Noch eins, schnell, bevor das Drama losgeht!'\n\nDas Spiel wiederholt sich fünfmal. Beim sechsten Bier verliert der Barkeeper die Geduld und fragt: 'Sagen Sie mal, was für ein Drama meinen Sie eigentlich die ganze Zeit?'\n\nDer Mann schaut ihn mit großen Augen an und sagt leise: 'Na, das Drama, dass ich überhaupt kein Geld im Portemonnaie habe, um das ganze Bier hier zu bezahlen!'" },
+            { id: 25, cat: "Arzt", text: "Ein Mann kommt mit einem dicken Verband um den Kopf zum Arzt. Der Arzt fragt erschrocken: 'Um Himmels willen, was ist Ihnen denn passiert?'\n\nDer Mann stöhnt: 'Ach Herr Doktor, ich habe gestern Abend meine Frau beim Bügeln gestört.'\n\nDer Arzt schaut verwirrt: 'Aber davon bekommt man doch keine Kopfverletzung?'\n\nDer Mann seufzt: 'Na ja... das Telefon hat geklingelt, und sie hat vor lauter Hektik das Bügeleisen statt des Hörers ans Ohr gehalten.'\n\nDer Arzt schaudert: 'Au weia! Das erklärt das verbrannte Ohr. Aber warum haben Sie dann ein blaues Auge und eine Platzwunde am Schädel?'\n\nDer Mann schluchzt: 'Weil dieser verdammte Idiot zwei Minuten später noch mal angerufen hat!'" },
+            { id: 26, cat: "Logik", text: "Zwei Wanderer sind in den Bergen unterwegs, als ihnen plötzlich ein riesiger, hungrig aussehender Bär gegenübersteht. Der Bär fletscht die Zähne und fängt an, langsam auf sie zuzulaufen.\n\nDer erste Wanderer setzt sofort ganz ruhig seinen Rucksack ab, öffnet ihn und holt seine Sportschuhe heraus. Er fängt hastig an, seine schweren Wanderschuhe auszuziehen.\n\nDer zweite Wanderer schaut ihn fassungslos an und flüstert: 'Bist du eigentlich völlig verrückt geworden?! Du glaubst doch wohl nicht ernsthaft, dass du mit diesen Sportschuhen schneller laufen kannst als ein Bär!'\n\nDer Erste schnürt die Schuhe fest, schaut auf und sagt trocken: 'Das muss ich auch gar nicht. Ich muss nur schneller laufen können als du!'" },
+            { id: 27, cat: "Himmel", text: "Ein Busfahrer und ein Pfarrer sterben am selben Tag und kommen gemeinsam im Himmel an. Petrus steht an der Pforte, winkt den Busfahrer sofort zu sich und führt ihn in einen wunderschönen, riesigen Palast mit Seeblick und goldenen Möbeln: 'Das ist dein neues Zuhause für die Ewigkeit!'\n\nAls Nächstes ist der Pfarrer an der Reihe. Petrus führt ihn in eine ganz kleine, spartanisch eingerichtete Einzimmerwohnung ohne Fernseher in der hintersten Ecke des Himmels.\n\nDer Pfarrer ist zutiefst gekränkt und beschwert sich: 'Petrus, das kann doch nicht dein Ernst sein! Ich habe mein ganzes Leben der Kirche gewidmet, jeden Sonntag treu gepredigt und dieser Mann hat einfach nur Leute durch die Gegend kutschiert! Warum bekommt er so einen Palast und ich nur diese Kammer?'\n\nPetrus klopft ihm mitleidig auf die Schulter und sagt: 'Weißt du, bei uns im Himmel geht es rein nach Leistung und Ergebnissen. Wenn du in der Kirche gepredigt hast, haben alle Leute geschlafen. Aber wenn dieser Mann Bus gefahren ist, haben alle Insassen wie verrückt gebetet!'" },
+            { id: 28, cat: "Verkehr", text: "Ein älteres Ehepaar fährt am Sonntagmittag gemütlich über die Autobahn. Plötzlich kommt im Radio eine dringende Eilmeldung des Radiosenders: 'Achtung, Achtung an alle Autofahrer auf der A8! Uns wird gemeldet, dass sich dort auf Höhe Leonberg ein Falschfahrer befindet! Bitte fahren Sie extrem vorsichtig und überholen Sie nicht!'\n\nDie Ehefrau schaut ganz erschrocken aus dem Fenster, blickt nach vorne auf die Fahrbahn und ruft aufgeregt: 'Ein einziger Falschfahrer?! Die sind ja wohl völlig blind beim Radio! Das sind hunderte!'" },
+            { id: 29, cat: "Justiz", text: "Ein Taschendieb wird auf frischer Tat ertappt und steht vor dem Richter. Nach einer langen Verhandlung spricht der Richter das Urteil: 'Aus Mangel an eindeutigen Beweisen werden Sie hiermit freigesprochen. Sie können gehen.'\n\nDer Angeklagte bleibt jedoch wie angewurzelt auf der Anklagebank sitzen, schaut den Richter unsicher an und rührt sich nicht.\n\nDer Richter blickt von seinen Papieren auf und sagt ungeduldig: 'Haben Sie mich nicht verstanden? Die Verhandlung ist vorbei. Sie sind frei und können jetzt nach Hause gehen!'\n\nDer Mann kratzt sich verlegen am Kopf und fragt leise: 'Herr Richter, bedeutet das jetzt im Klartext... dass ich die goldene Uhr jetzt wirklich behalten darf?'" },
+            { id: 30, cat: "Gastronomie", text: "Ein Gast betritt ein nobles Restaurant, setzt sich an den Tisch und bestellt ein Schnitzel. Nach einer Weile bringt der Kellner das Essen. Der Gast schneidet das erste Stück ab, kaut kurz darauf herum, verzieht das Gesicht und ruft den Kellner verärgert zu sich.\n\n'Sagen Sie mal', schimpft der Gast, 'dieses Schnitzel schmeckt ja absolut furchtbar! Das Fleisch ist zäh wie Leder und vollkommen ungewürzt! Ich verlange sofort den Koch zu sprechen!'\n\nDer Kellner verbeugt sich höflich, schaut den Gast bedauernd an und sagt ruhig: 'Das wird leider nicht möglich sein, mein Herr. Der Koch hat vorhin selbst ein Stück von dem Schnitzel probiert und befindet sich derzeit im Krankenhaus.'" },
+            { id: 31, cat: "Handwerker", text: "Ein Malermeister steht auf der Leiter und streicht die Decke im Flur, als der Lehrling von unten zu ihm hochruft: 'Meister, Meister! Sie müssen sich unbedingt ganz fest an die Leiter klammern! Ich muss sie nämlich jetzt unten mal kurz für eine halbe Stunde wegnehmen!'" },
+            { id: 32, cat: "Arzt", text: "Ein Mann geht zum Psychiater, weil er seit Wochen unter furchtbaren Albträumen leidet. 'Herr Doktor', klagt er, 'es ist schrecklich. Jede Nacht, sobald ich die Augen schließe, träume ich, dass ein riesiges, grünes Monster unter meinem Bett sitzt und laut an den Federn kratzt. Ich kann vor lauter Angst kein Auge mehr zumachen!'\n\nDer Psychiater nickt wichtig, macht sich ein paar Notizen und sagt: 'Das ist ein klassischer Fall von tiefsitzender Urangst. Wir müssen das in einer langjährigen Therapie aufarbeiten. Wir treffen uns ab jetzt dreimal die Woche, die Sitzung kostet 150 Euro.'\n\nDer Mann schluckt schwer, bedankt sich und verlässt die Praxis. Ein halbes Jahr später trifft der Psychiater den Mann zufällig auf der Straße und sieht, dass er absolut erholt und tiefenentspannt aussieht.\n\n'Mensch', sagt der Arzt überrascht, 'Sie sind ja gar nicht mehr zu den Sitzungen gekommen! Wie haben Sie Ihre furchtbaren Albträume denn so schnell in den Griff bekommen?'\n\nDer Mann lächelt breit: 'Ach, wissen Sie, Herr Doktor, ich habe einem Kumpel von dem Problem erzählt. Der hat mir einen Tipp gegeben, der mich genau 10 Euro gekostet hat – und seitdem schlafe ich wie ein Baby!'\n\nDer Psychiater schaut pikiert: 'Aha? Und was war das bitteschön für ein Tipp?'\n\nDer Mann grinst: 'Er hat gesagt, ich soll einfach die Beine vom Bett absägen, damit die Matratze flach auf dem Boden liegt!'" },
+            { id: 33, cat: "Tiere", text: "Ein Hund geht in ein Postamt, stellt sich brav in die Warteschlange und tritt schließlich an den Schalter. Er nimmt ein Telegramm-Formular in den Mund, legt es auf den Tresen und bellt den Beamten an.\n\nDer Beamte schaut auf den Zettel. Darauf steht sauber geschrieben: 'Wau. Wau. Wau. Wau. Wau. Wau. Wau. Wau. Wau.'\n\nDer Beamte zählt die Wörter durch und sagt freundlich zum Hund: 'Hören Sie mal, das sind jetzt genau neun Wörter. Für denselben Preis können Sie aber noch ein zehntes *Wau* hinzufügen, wenn Sie möchten.'\n\nDer Hund schüttelt verständnislos den Kopf, verdreht die Augen und sagt genervt: 'Sind Sie eigentlich verrückt?! Dann ergäbe der ganze Satz doch überhaupt keinen Sinn mehr!'" },
+            { id: 34, cat: "Ehe", text: "Ein Ehemann kommt abends gut gelaunt nach Hause und ruft laut: 'Schatz, pack sofort deine Koffer! Ich habe heute im Lotto den Jackpot geknackt und sieben Millionen Euro gewonnen!'\n\nDie Ehefrau fällt ihm überglücklich um den Hals: 'Oh mein Gott, das ist ja der helle Wahnsinn! Was soll ich denn einpacken? Sachen für den Strand oder eher warme Kleidung für die Berge?'\n\nDer Mann schaut sie trocken an und sagt: 'Das ist mir vollkommen egal. Hauptsache, du bist bis heute Abend um acht Uhr ausgezogen!'" },
+            { id: 35, cat: "Klassiker", text: "Drei Schildkröten beschließen, nach Jahren mal wieder ein Picknick im Wald zu machen. Sie packen mühsam ihre Sachen, wandern los und erreichen nach genau zwei Jahren den perfekten Platz im Wald. Sie decken den Tisch und stellen fest: Sie haben das Bier vergessen!\n\nDie älteste Schildkröte sagt zur jüngsten: 'Du bist die Schnellste von uns. Du musst zurückgehen und das Bier holen.'\n\nDie jüngste Schildkröte schüttelt den Kopf: 'Nein, das mache ich nicht. Wenn ich weg bin, esst ihr die ganzen belegten Brote ohne mich auf.'\n\nDie anderen beiden schwören feierlich bei allem, was ihnen heilig ist, dass sie keinen einzigen Bissen anrühren werden, bis sie wieder da ist. Die kleine Schildkröte seufzt, dreht sich um und marschiert los.\n\nEin Jahr vergeht... zwei Jahre vergehen... nach fünf Jahren hält es die älteste Schildkröte nicht mehr vor Hunger aus und sagt: 'Komm, wir essen jetzt jeder nur ein halbes Brot. Sie merkt es ja eh nicht.' Sie nehmen sich gerade ein Brot, als plötzlich hinter einem dicken Busch direkt neben ihnen die kleine Schildkröte hervorringt und laut ruft: 'Aha! Ich hab's gewusst! Wenn ihr so fies seid, laufe ich erst gar nicht los!'" },
+            { id: 36, cat: "Alltag", text: "Ein Passant spricht auf der Straße einen fremden Mann an: 'Entschuldigung, können Sie mir vielleicht sagen, wo auf der anderen Straßenseite die Post ist?'\n\nDer Angesprochene schaut ihn völlig verständnislos an, zeigt mit dem Finger über die Straße und sagt: 'Na, genau da drüben, wo denn sonst?'\n\nDer Passant seufzt tief: 'Ich wusste es... Ich war nämlich gerade eben da drüben und der Mann dort hat mir steif und fest versichert, die Post sei auf *dieser* Straßenseite!'" },
+            { id: 37, cat: "Kneipe", text: "Ein Mann kommt mit einem kleinen, lebendigen Oktopus unter dem Arm in eine Bar. Er stellt sich lautstark in die Mitte des Raums und ruft: 'Achtung an alle! Mein Oktopus hier ist ein absolutes medizinisches Wundertier! Er kann absolut jedes Musikinstrument auf dieser Welt innerhalb von Sekunden fehlerfrei spielen! Wer mir ein Instrument bringt, das er nicht beherrscht, bekommt von mir 500 Euro bar auf die Hand!'\n\nDie Gäste sind begeistert. Einer holt eine alte Mundharmonika aus der Tasche. Der Oktopus nimmt sie mit zwei Fangarmen, setzt sie an und spielt eine wunderschöne, fehlerfreie Melodie. Der nächste bringt eine Violine – der Oktopus spielt ein perfektes Solo.\n\nSchließlich grinst ein Schotte im Hintergrund, geht kurz raus und kommt mit einem uralten, völlig verstaubten und komplizierten Dudelsack zurück. Er legt ihn vor dem Oktopus ab.\n\nDas Tier krabbelt neugierig um den Dudelsack herum, betastet die Schläuche, wickelt seine Fangarme darum, schaut völlig verwirrt und rührt sich nicht mehr.\n\nDer Besitzer lacht nervös: 'Na los, Kumpel! Was ist los? Spiel uns was vor, sonst verliere ich mein ganzes Geld!'\n\nDer Oktopus schaut traurig zu seinem Besitzer hoch und seufzt: 'Spielen?! Ich dachte, wenn ich erst mal herausgefunden habe, wie ich diesen schicken Pyjama hier ausziehe, darf ich sie endlich küssen!'" },
+            { id: 38, cat: "Schule", text: "In der Grundschule fragt die Lehrerin die Kinder: 'Was arbeitet denn euer Vater so? Erzählt doch mal.'\n\nMax meldet sich: 'Mein Papa ist Kfz-Mechaniker und repariert Autos.'\nLisa meldet sich: 'Mein Papa ist Bäcker und backt Brötchen.'\n\nDer kleine Fritzchen meldet sich als Letzter und sagt ganz stolz: 'Mein Papa ist Stripper in einer bekannten Nachtbar für Männer. Er zieht sich dort jeden Abend für Geld nackt an einer Stange aus!'\n\nDie Lehrerin ist völlig schockiert, bricht die Stunde ab und spricht Fritzchen in der Pause unter vier Augen an: 'Fritzchen... sagt dein Vater das wirklich zu dir?'\n\nFritzchen wird ganz rot, schaut auf den Boden und flüstert: 'Nein, eigentlich nicht... Er ist in Wirklichkeit IT-Unternehmensberater für SAP-Software. Aber das war mir vor den anderen Kindern einfach viel zu peinlich!'" },
+            { id: 39, cat: "Arzt", text: "Ein älterer Herr geht zum Arzt für einen Routine-Checkup. Nach der Untersuchung schaut der Arzt ganz erstaunt auf die Werte und sagt: 'Mensch, Herr Müller, Sie sind mit Ihren 82 Jahren ja noch fit wie ein Turnschuh! Verraten Sie mir Ihr Geheimnis: Wie machen Sie das bloß?'\n\nHerr Müller lächelt verschmitzt: 'Ach Herr Doktor, das liegt an meinem Hobby. Ich gehe jeden Morgen vor dem Aufstehen mit meinem Vater jagen!'\n\nDem Arzt fällt die Kinnlade herunter: 'Mit Ihrem Vater?! Wie alt ist der denn bitteschön?'\n\n'Der wird nächsten Monat 105', sagt Herr Müller stolz.\n\nDer Arzt schüttelt fassungslos den Kopf: 'Das ist ja unglaublich! Und der geht noch mit Ihnen jagen?'\n\n'Klar', sagt Müller. 'Und wissen Sie was? Letzte Woche hat mein Großvater sogar geheiratet!'\n\nDer Arzt klammert sich am Schreibtisch fest: 'Ihr Großvater?! Der muss ja weit über 120 sein! Warum will man denn in dem Alter überhaupt noch heiraten?'\n\nHerr Müller seufzt: 'Na ja, freiwillig wollte er ja eigentlich auch nicht – aber seine Eltern haben einfach unheimlich Druck gemacht!'" },
+            { id: 40, cat: "Polizei", text: "Ein sichtlich betrunkener Mann torkelt nachts über den Parkplatz, sucht mühsam mit dem Schlüssel in der Hand sein Auto und versucht verzweifelt, das Schloss der Fahrertür zu treffen. Ein Polizist beobachtet das Schauspiel seit Minuten, geht schließlich zu ihm rüber und sagt streng: 'Guten Abend. Das können Sie sofort vergessen. Wenn Sie versuchen, sich in diesem Zustand ans Lenkrad zu setzen, nehme ich Sie sofort mit!'\n\nDer Mann schaut den Polizisten mit glasigen Augen an, deutet völlig fassungslos auf das Dach des Wagens und lallt: 'Herr Wachtmeister... mir ist das Auto völlig egal! Können Sie mir viel eher mal verraten... wer mir vorhin meine gesamte Wohnung unter dem Schlüssel weggestohlen hat?!'" },
+            { id: 41, cat: "Beruf", text: "Ein junger Unternehmensberater fährt in seinem nagelneuen Sportwagen durch die bayerischen Alpen. Plötzlich sieht er eine riesige Schafherde und einen Schäfer, der am Hang sitzt. Er bremst scharf, steigt aus, geht zum Schäfer und sagt arrogant: 'Wenn ich Ihnen exakt vorhersage, wie viele Schafe Sie in Ihrer Herde haben, ohne sie einzeln zu zählen, darf ich mir dann eines der Tiere mitnehmen?'\n\nDer Schäfer schaut kurz auf seine Herde, kaut an einem Grashalm und sagt ruhig: 'Na gut, warum nicht.'\n\nDer Berater holt sofort sein Notebook heraus, verbindet sich per Satellit, scannt die Herde per GPS, wertet die Daten in einer Excel-Tabelle aus und sagt nach fünf Minuten stolz: 'Es sind exakt 473 Schafe!'\n\nDer Schäfer nickt: 'Das stimmt. Suchen Sie sich eins aus.'\n\nDer junge Mann greift sich glücklich ein Tier und lädt es mühsam in den Kofferraum seines Sportwagens. Als er gerade einsteigen will, ruft ihm der Schäfer hinterher: 'Sagen Sie mal... Wenn ich Ihnen im Gegenzug Ihren exakten Beruf nenne, bekomme ich dann mein Tier wieder?'\n\nDer Berater lacht: 'Abgemacht! Das erraten Sie nie.'\n\nDer Schäfer sagt sofort: 'Sie sind Unternehmensberater bei einer Unternehmensberatung.'\n\nDem Mann fällt die Kinnlade herunter: 'Wahnsinn! Wie haben Sie das denn bitteschön herausgefunden?'\n\nDer Schäfer seufzt: 'Ganz einfach: Erstens kommen Sie hier an, obwohl niemand Sie gerufen hat. Zweitens wollen Sie dafür bezahlt werden, dass Sie mir eine Antwort geben, die ich sowieso schon längst weiß. Und drittens haben Sie absolut keine Ahnung von meinem Geschäft – sonst hätten Sie sich nämlich gerade nicht meinen Schäferhund in den Kofferraum gepackt!'" },
+            { id: 42, cat: "Klassiker", text: "Zwei Männer sitzen im Flugzeug nebeneinander. Der eine ist ein egoistischer Anwalt, der andere ein schüchterner junger Student. Der Anwalt langweilt sich und will den Studenten ein bisschen übers Ohr hauen. 'Lust auf ein kleines Spiel?', fragt der Anwalt. 'Ich stelle Ihnen eine Frage. Wenn Sie die Antwort nicht wissen, geben Sie mir 5 Euro. Danach stellen Sie mir eine Frage. Wenn ich die Antwort nicht weiß, gebe ich Ihnen 500 Euro!'\n\nDer Student überlegt kurz und willigt ein.\n\nDer Anwalt stellt die erste Frage: 'Wie groß ist der exakte Abstand von der Erde bis zum Mond?' Der Student sagt kein Wort, greift in die Tasche und gibt dem Anwalt schweigend 5 Euro.\n\n'So, jetzt sind Sie dran!', sagt der Anwalt grinsend.\n\nDer Student fragt: 'Was geht mit drei Beinen den Berg hinauf und kommt am Abend mit vier Beinen wieder herunter?'\n\nDer Anwalt stutzt. Er nimmt sein Notebook, durchsucht das Internet, schickt E-Mails an Kollegen, sucht in Online-Lexika – nach einer Stunde gibt er frustriert auf. Er weckt den schlafenden Studenten auf, zählt ihm zähneknirschend 500 Euro bar auf die Hand und flüstert: 'Gut, ich habe keine Ahnung. Was ist es denn nun?'\n\nDer Student sagt kein Wort, nimmt die 500 Euro, greift in seine Hosentasche, gibt dem Anwalt schweigend 5 Euro zurück und schläft seelenruhig weiter." },
+            { id: 43, cat: "Ehe", text: "Ein Mann kommt nach der Arbeit nach Hause und findet seine Frau weinend in der Küche vor. 'Was ist denn passiert, Liebling?', fragt er besorgt.\n\nSie schluchzt: 'Ach, es ist furchtbar. Ich wollte dir heute zum Abendessen eine ganz besondere Pastete backen. Aber als ich kurz aus der Küche gegangen bin, hat unser Hund die ganze Pastete einfach vom Blech gefressen!'\n\nDer Ehemann nimmt sie tröstend in die Arme, streichelt ihr über den Kopf und sagt erleichtert: 'Ach Schatz, weine doch nicht. Mach dir keine Sorgen. Ich kaufe uns morgen einfach direkt einen neuen Hund!'" },
+            { id: 44, cat: "Justiz", text: "Vor Gericht wird ein Zeuge vernommen, der einen Nachbarschaftsstreit beobachtet hat. Der Richter schaut den Mann streng an und fragt: 'Sie waren also Zeuge des Vorfalls. Können Sie dem Gericht bitte im exakten Wortlaut schildern, mit welchen Schimpfwörtern der Angeklagte seinen Nachbarn belegt hat?'\n\nDer Zeuge druckst herum, läuft rot an und sagt verlegen: 'Ach Herr Richter, das ist mir wirklich unheimlich peinlich. Das sind alles Wörter, die ein anständiger, gebildeter Mensch niemals in den Mund nehmen würde.'\n\nDer Richter nickt verständnisvoll: 'Gut, das verstehe ich natürlich. In diesem Fall kommen Sie bitte einfach kurz zu mir nach vorne an den Richtertisch und flüstern mir die Ausdrücke ganz leise ins Ohr!'" },
+            { id: 45, cat: "Gastronomie", text: "Ein Mann betritt ein Restaurant und bestellt eine Rindersuppe. Als der Kellner sie bringt, stellt der Mann fest, dass eine tote Fliege mitten in der Suppe schwimmt. Verärgert ruft er den Kellner: 'Herr Ober! Was macht denn bitteschön diese Fliege in meiner Suppe?!'\n\nDer Kellner beugt sich über den Teller, schaut sich das Insekt ganz genau an und sagt bewundernd: 'Also wenn Sie mich fragen, mein Herr... sieht das verdammt nach Rückenschwimmen aus!'" },
+            { id: 46, cat: "Tiere", text: "Ein Hase kommt in eine Apotheke, hoppelt an den Tresen und fragt den Apotheker mit tiefer Stimme: 'Haddu Möhren?'\n\nDer Apotheker schüttelt den Kopf: 'Nein, lieber Hase. Das hier ist eine Apotheke, wir verkaufen nur Medikamente, Pflaster und Vitamine. Möhren bekommst du drüben auf dem Markt.'\n\nAm nächsten Tag kommt der Hase wieder: 'Haddu Möhren?'\nDer Apotheker seufzt: 'Nein, ich habe gestern schon gesagt, ich habe keine Möhren!'\n\nDer Apotheker denkt sich: *Ich muss dem Hasen helfen.* Er malt ein riesiges Plakat mit einer durchgestrichenen Möhre und hängt es an die Eingangstür.\n\nAm dritten Tag kommt der Hase wieder, schaut kurz auf das Schild, hoppelt zum Tresen und sagt breit grinsend: 'Aha! Muddu also doch Möhren gehabt haben!'" },
+            { id: 47, cat: "Alltag", text: "Ein Mann geht in ein Fachgeschäft für Haushaltswaren, weil er eine neue Kuckucksuhr für sein Wohnzimmer sucht. Der Verkäufer zeigt ihm ein wunderschönes, handgeschnitztes Modell aus dem Schwarzwald: 'Das hier ist unser absolutes Spitzenmodell. Der Kuckuck darin ist extrem zuverlässig und ruft zu jeder vollen Stunde exakt die richtige Uhrzeit.'\n\nDer Mann ist begeistert und kauft die Uhr. Zwei Tage später kommt er wütend zurück in den Laden: 'Sagen Sie mal, die Uhr ist eine absolute Fehlkonstruktion! Gestern Mittag um zwölf Uhr kam der Kuckuck zwar heraus, hat aber statt zwölfmal nur ein einziges Mal ganz leise *Kuck* gerufen und ist wieder verschwunden!'\n\nDer Verkäufer kratzt sich am Kopf, schaut sich das Modell an und fragt vorsichtig: 'Mhm... sagen Sie mal, um wie viel Uhr haben Sie die Kuckucksuhr denn eigentlich gestern aufgehängt?'\n\nDer Mann antwortet stolz: 'Exakt um fünf Minuten nach zwölf!'\n\nDer Verkäufer seufzt tief: 'Na sehen Sie! Der arme Vogel hatte um zwölf Uhr natürlich schon elfmal gerufen und dachte schlichtweg, Sie wären der Nachzügler!'" },
+            { id: 48, cat: "Kneipe", text: "Ein Cowboy reitet durch die Wüste, kommt an einem kleinen Saloon an, bindet sein Pferd draußen an der Stange fest und geht rein. Er trinkt ein paar Whisky, geht nach einer Stunde wieder raus und stellt fest: Sein Pferd wurde geklaut!\n\nWütend stürmt er zurück in den Saloon, zieht seine beiden Revolver, schießt einmal laut in die Decke und brüllt: 'Ich trinke jetzt noch einen einzigen Whisky! Und wenn mein Pferd nicht wieder draußen an der Stange steht, wenn ich das Glas absetze... dann werde ich genau das tun, was ich vor fünf Jahren in Texas tun musste, als man mir mein Pferd geklaut hat!'\n\nDie Gäste im Saloon werden totenstill, zittern vor Angst und tuscheln aufgeregt. Der Cowboy trinkt in aller Ruhe seinen Whisky aus, geht vor die Tür – und tatsächlich: Das Pferd steht wieder brav an seinem Platz.\n\nDer Barkeeper, der ihm erleichtert hinterhergelaufen ist, flüstert ehrfürchtig: 'Sagen Sie mal, Mister... nur so unter uns: Was mussten Sie denn damals in Texas tun, als man Ihr Pferd geklaut hat?'\n\nDer Cowboy seufzt, schwingt sich in den Sattel und sagt trocken: 'Na ja, ich musste die fünfzehn Kilometer bis nach Hause wohl oder übel zu Fuß laufen!'" },
+            { id: 49, cat: "Schule", text: "In der Schule fragt die Lehrerin im Sachkundeunterricht: 'Kinder, wer von euch kann mir denn sagen, was ein *Schmarotzer* ist?'\n\nDer kleine Fritzchen meldet sich sofort und sprudelt hervor: 'Ein Schmarotzer ist ein Tier, das es sich auf Kosten eines anderen Lebewesens so richtig gemütlich macht, ohne selbst irgendetwas dafür zu tun!'\n\nDie Lehrerin nickt zufrieden: 'Sehr gut erklärt, Fritzchen. Und kannst du mir jetzt auch noch ein konkretes Beispiel für so einen Schmarotzer nennen?'\n\nFritzchen überlegt kurz und sagt stolz: 'Klar! Mein Onkel Werner. Der liegt seit drei Wochen bei uns auf der Couch, trinkt Papas Bier und weigert sich strikt, wieder auszuziehen!'" },
+            { id: 50, cat: "Arzt", text: "Ein Mann kommt völlig verzweifelt zum Augenarzt: 'Herr Doktor, Sie müssen mir unbedingt helfen! Jedes Mal, wenn ich morgens meine Tasse Kaffee trinke, habe ich danach ein ganz furchtbares, stechendes Gefühl im rechten Auge! Ich habe schon Angst, blind zu werden!'\n\nDer Augenarzt untersucht das Auge gründlich mit der Lupe, kann aber absolut keine Entzündung oder Verletzung finden. Er schaut den Patienten eine Weile nachdenklich an, holt tief Luft und sagt schließlich: 'Wissen Sie was? Versuchen Sie doch morgen früh einfach mal, vor dem Trinken den Löffel aus der Tasse zu nehmen!'" },
+            { id: 51, cat: "Klassiker", text: "Ein Flugzeug befindet sich in schweren Turbulenzen, als plötzlich der Pilot über die Lautsprecher durchgibt: 'Meine Damen und Herren, wir haben ein schweres Triebwerksproblem. Wir verlieren rapide an Höhe. Ich fordere Sie hiermit auf, sich auf eine Notwasserung vorzubereiten. Bitte bewahren Sie die Ruhe.'\n\nEine Frau in der vorderen Reihe gerät völlig in Panik, springt auf und schreit: 'Wenn wir alle sterben müssen, will ich wenigstens noch ein letztes Mal spüren, dass ich eine echte Frau bin! Kann mir hier drin irgendjemand das Gefühl geben, eine wahre Frau zu sein?!'\n\nEin durchtrainierter Mann am Gang wirft einen Blick auf sie, steht schweigend auf, geht zielstrebig auf sie zu, zieht sich mit einem Ruck das Hemd aus, reicht es ihr mit einem coolen Blick und sagt: 'Hier... Das muss dringend bis zur Landung gebügelt werden!'" },
+            { id: 52, cat: "Tiere", text: "Ein Mann geht im Stadtpark spazieren und sieht einen anderen Mann, der auf einer Parkbank sitzt und mit seinem Hund Schach spielt. Der Passant bleibt fassungslos stehen, beobachtet das Spiel eine Weile und sagt schließlich tief beeindruckt: 'Das ist ja wohl das absolut Unglaublichste, was ich je in meinem Leben gesehen habe! Ihr Hund ist ja ein wahres Genie!'\n\nDer Hundebesitzer winkt ab, verzieht keine Miene und sagt gelangweilt: 'Ach, übertreiben Sie mal nicht. So schlau ist der Kerl gar nicht. Beim Stand von 3:2 für mich hat er vorhin schon wieder seine Dame eingestellt!'" },
+            { id: 53, cat: "Verkehr", text: "Ein Polizist stoppt einen Autofahrer, der Schlangenlinien fährt. 'Guten Abend', sagt der Polizist streng. 'Ihr rechtes Rücklicht ist kaputt, Ihr Reifen vorne links hat absolut kein Profil mehr, und Sie sind deutlich zu schnell gefahren. Das macht mindestens 150 Euro Bußgeld!'\n\nDer Fahrer strahlt über das ganze Gesicht, greift in die Tasche und ruft begeistert: 'Mensch, klasse! Gekauft! Gestern in der Werkstatt wollten die Gauner nämlich noch über 600 Euro von mir für die Reparaturen haben!'" },
+            { id: 54, cat: "Ehe", text: "Ein Ehepaar feiert seinen 25. Hochzeitstag und macht eine feine Kreuzfahrt in der Karibik. Eines Abends sitzen die beiden an Deck und schauen in den Sternenhimmel. Sie fragt ihn zärtlich: 'Sag mal, Schatz... Wenn ich irgendwann einmal sterben sollte, würdest du dann eigentlich noch mal heiraten?'\n\nDer Mann überlegt eine Weile und sagt ehrlich: 'Ja, ich denke schon. Ich mag das Eheleben einfach.'\n\nSie schaut ihn an: 'Und würde sie dann auch in unserem Haus wohnen?'\n'Ja, das Haus ist ja abbezahlt.'\n\nSie bohrt weiter: 'Und würde sie dann auch meine Golfschläger benutzen?'\n\nDer Mann schüttelt sofort den Kopf: 'Nein, auf gar keinen Fall! Das geht gar nicht... Sie ist nämlich Linkshänderin!'" },
+            { id: 55, cat: "Büro", text: "Ein neuer Mitarbeiter hat seinen ersten Tag in einer großen Behörde. Er geht zum Abteilungsleiter und fragt eifrig: 'Herr Chef, ich bin hochmotiviert! Sagen Sie mir bitte: Wie viele Leute arbeiten denn eigentlich in dieser Abteilung?'\n\nDer Abteilungsleiter lehnt sich seufzend in seinem Sessel zurück, schaut aus dem Fenster und sagt trocken: 'Na ja... ich schätze, im Großen und Ganzen... so ungefähr die Hälfte!'" },
+            { id: 56, cat: "Kneipe", text: "Ein Mann kommt mit einer Schnecke auf der Schulter in eine Kneipe, setzt sich an die Bar und bestellt ein Bier für sich und ein Salatblatt für die Schnecke. Der Barkeeper ist amüsiert und fragt: 'Mensch, wo haben Sie denn diesen ungewöhnlichen Begleiter her?'\n\nDer Mann seufzt: 'Ach, das ist eine lange Geschichte. Gestern Abend lief ich durch den Park, fand eine Wunderlampe, rieb daran und ein Dschinn erschien. Er meinte, ich hätte einen Wunsch frei.'\n\nDer Barkeeper nickt gespannt: 'Und? Was haben Sie sich gewünscht?'\n\nDer Mann schaut traurig auf seine Schulter: 'Na ja, ich habe gesagt, ich wünsche mir eine unendlich ausdauernde, kleine, süße Schnecke, die im Bett absolut alles mitmacht... Ich glaube, der Dschinn hat mich akustisch nicht ganz richtig verstanden!'" },
+            { id: 57, cat: "Arzt", text: "Ein älterer Mann kommt zum Arzt und beschwert sich über heftige Schmerzen im linken Knie. Der Arzt untersucht das Gelenk gründlich, schüttelt den Kopf und sagt mitfühlend: 'Tja, Herr Kunze, das ist ganz eindeutig der normale Verschleiß. Das liegt schlicht und ergreifend am Alter. Sie sind nun mal auch schon 78.'\n\nHerr Kunze springt empört vom Behandlungstisch auf und schimpft: 'Herr Doktor, erzählen Sie mir doch keinen Quatsch! Mein rechtes Knie ist ganz exakt genauso alt wie das linke – und das tut überhaupt nicht weh!'" },
+            { id: 58, cat: "Justiz", text: "In einer Gerichtsverhandlung wegen schweren Diebstahls plädiert der Anwalt des Angeklagten auf ein mildes Urteil: 'Herr Richter, mein Mandant hat die Banknoten nicht gestohlen! Er leidet unter einer extrem seltenen Form von Schlafwandeln. Er ist nachts im Tiefschlaf in die Bank eingebrochen, hat im Traum den Safe geknackt und das Geld vollkommen unbewusst mit nach Hause genommen!'\n\nDer Richter lächelt milde, blickt über seine Brille und sagt: 'Das ist eine faszinierende medizinische Erklärung. Mein Urteil lautet daher: Der Angeklagte wird zu zwei Jahren Haft verurteilt. Er darf die Strafe jedoch gerne im Schlaf absitzen!'" },
+            { id: 59, cat: "Tiere", text: "Ein dicker Bär, ein Wolf und ein kleiner Hase sitzen gemeinsam in der Zelle im Gefängnis. Der Wolf fragt den Bären traurig: 'Mensch Bär, warum bist du denn eigentlich hier gelandet?'\n\nDer Bär seufzt: 'Ach, ich habe im Wald den Jäger erwischt und ihm die Flinte weggenommen. Und du?'\n\nDer Wolf schnieft: 'Ich habe die Schafe vom Bauern gejagt. Und was ist mit dir, kleiner Hase?'\n\nDer Hase wirft sich cool in die Brust, spuckt in die Ecke und knurrt mit tiefer Stimme: 'Ich? Ach, mir wollte dieser dämliche Förster einfach partout meinen Waffenschein für die Kettensäge nicht verlängern!'" },
+            { id: 60, cat: "Gastronomie", text: "Ein Gast sitzt im Café, trinkt seinen Kaffee und winkt den Kellner herbei: 'Herr Ober! In meinem Kaffee schwimmt ja ein Haar! Und wenn ich mich nicht ganz gewaltig täusche, ist das eindeutig ein Barthaar vom Koch!'\n\nDer Kellner zuckt ungerührt mit den Achseln und sagt kühl: 'Da können Sie mal sehen, was für ein unglaubliches Glück Sie haben, mein Herr. Vor fünf Minuten lief hier noch eine Dame Sturm, weil sie behauptete, in ihrer Suppe läge eine ganze Locke von unserer Spülhilfe!'" },
+            { id: 61, cat: "Alltag", text: "Ein Mann geht zum Tätowierer und sagt kurz und knapp: 'Ich möchte ein Tattoo von einem riesigen, feuerspeienden roten Drachen auf meinem gesamten Rücken haben! Und zwar sofort!'\n\Der Tätowierer nickt, setzt die Nadel an und fängt an zu arbeiten. Nach genau drei Minuten legt er die Maschine wieder beiseite und sagt stolz: 'So, fertig!'\n\nDer Mann schaut völlig entgeistert in den Spiegel: 'Wie, fertig?! Das kann doch unmöglich schon fertig sein!'\n\nDer Tätowierer zuckt mit den Achseln: 'Wieso? Das Wort *Drache* hat doch nur sechs Buchstaben!'" },
+            { id: 62, cat: "Kneipe", text: "Ein Mann kommt deprimiert in die Kneipe und bestellt beim Barkeeper ein Glas Milch. Der Wirt schaut ihn fassungslos an: 'Milch?! In einer Bar?! Was ist denn mit Ihnen los?'\n\nDer Mann stöhnt: 'Ach, hören Sie bloß auf. Ich hatte heute einen furchtbaren Streit mit meiner Frau. Sie kam am Ende wütend auf mich zu und schrie: *Ich werde ab heute nur noch mit dir sprechen, wenn du mir beweisen kannst, dass du wie ein echtes, unschuldiges Baby lebst!*... Und jetzt sitze ich hier und trinke Milch!'" },
+            { id: 63, cat: "Schule", text: "Der Lehrer im Chemieunterricht hält ein kleines Stück reines Gold in der Hand und fragt die Klasse: 'Wenn ich dieses wertvolle Goldstück jetzt hier in dieses Glas mit reiner Salzsäure werfe... Was glaubt ihr, wird sich das Gold darin auflösen oder nicht?'\n\nDer kleine Fritzchen meldet sich sofort im Hintergrund und ruft laut: 'Nein, Herr Lehrer, ganz bestimmt nicht!'\n\nDer Lehrer lächelt stolz: 'Sehr gut, Fritzchen! Und kannst du der Klasse auch die exakte wissenschaftliche Begründung dafür liefern?'\n\nFritzchen grinst: 'Ganz einfach: Wenn sich das Gold darin auflösen würde, hätten Sie es doch niemals im Leben da reingeworfen!'" },
+            { id: 64, cat: "Arzt", text: "Ein Mann kommt mit einer schweren Gehirnerschütterung und zwei blauen Augen ins Krankenhaus. Der Arzt untersucht ihn und fragt erstaunt: 'Um Himmels willen, wie haben Sie denn das geschafft?'\n\nDer Mann stöhnt: 'Ach Herr Doktor, ich war gestern Abend beim Tanzen. Plötzlich rief der DJ durch das Mikrofon: *Und jetzt alle Paare bitte die Plätze tauschen!*... Ich habe mich wohl im Eifer des Gefechts ein wenig zu schnell umgedreht!'" },
+            { id: 65, cat: "Verkehr", text: "Ein Lkw-Fahrer bleibt mit seinem riesigen Sattelzug mitten am hellichten Tag unter einer viel zu niedrigen Eisenbahnbrücke stecken. Der Lkw ist bombenfest verkeilt, nichts geht mehr vor oder zurück. Nach einer halben Stunde kommt die Polizei mit Blaulicht angefahren.\n\nDer Polizist steigt aus, geht gemächlich zum Lkw-Fahrer, schaut sich das Desaster an, verschränkt die Arme hinter dem Rücken und fragt hämisch: 'Na, Kollege? Brücke übersehen und stecken geblieben?'\n\nDer Lkw-Fahrer schaut ihn finster an und sagt trocken: 'Nein, Herr Wachtmeister! Ich liefere hier gerade eine Brücke aus und mir ist mitten auf der Fahrt schlichtweg der Sprit ausgegangen!'" },
+            { id: 66, cat: "Ehe", text: "Eine Frau kommt nach einem langen Einkaufsbummel nach Hause, geht freudestrahlend ins Wohnzimmer zu ihrem Ehemann und ruft: 'Schatz, schau mal! Ich habe mir heute in der Stadt ein fantastisches, neues Kleid gekauft! Es war im Angebot und hat statt 300 Euro nur 150 Euro gekostet! Ist das nicht ein absoluter Traum?'\n\nDer Ehemann blickt genervt von seiner Zeitung auf und sagt: 'Ein Traum wäre es gewesen, wenn du die 150 Euro einfach gespart hättest, statt sie auszugeben.'\n\nDie Frau schüttelt verständnislos den Kopf: 'Ach Harald, du verstehst aber auch gar nichts von Finanzen! Wenn ich das Kleid nicht gekauft hätte, hätten wir doch die 150 Euro Rabatt überhaupt nicht eingenommen!'" },
+            { id: 67, cat: "Beruf", text: "Ein Maurer, ein Zimmermann und ein Beamter streiten sich heftig darüber, welches der älteste Beruf der Welt ist.\n\nDer Maurer sagt stolz: 'Wir Maurer natürlich! Wir haben damals schon die Pyramiden in Ägypten gebaut, das war harte Arbeit!'\n\nDer Zimmermann schüttelt den Kopf: 'Völliger Quatsch! Wir Zimmerleute sind viel älter. Wir haben damals schon die Arche Noah aus Holz gezimmert, lange vor den Pyramiden!'\n\nDer Beamte lehnt sich lächelnd zurück, nippt an seinem Kaffee und sagt entspannt: 'Ihr habt doch alle keine Ahnung. Ganz am Anfang aller Zeiten herrschte auf der Erde das absolute, totale Chaos... Und was glaubt ihr bitteschön, wer dieses Chaos im Vorfeld so perfekt organisiert hat?!'" },
+            { id: 68, cat: "Klassiker", text: "Ein Passagier im Flugzeug tippt der Flugbegleiterin nervös auf die Schulter: 'Entschuldigung, Miss... Ich fliege heute das allererste Mal in meinem Leben. Können Sie mir vielleicht sagen, wie oft so ein großes Flugzeug im Durchschnitt eigentlich abstürzt?'\n\nDie Stewardess lächelt ihn beruhigend an und sagt völlig gelassen: 'Ach, machen Sie sich mal keine Sorgen, mein Herr. In der Regel stürzt jedes Flugzeug eigentlich nur ein einziges Mal ab!'" },
+            { id: 69, cat: "Tiere", text: "Zwei Rennschnecken treffen sich am Waldrand. Die eine Schnecke hat ein dickes blaues Auge und ein großes Pflaster auf dem Gehäuse. Die andere fragt ganz erschrocken: 'Um Himmels willen, Erna! Was ist denn dir passiert?!'\n\nErna stöhnt und hält sich den Kopf: 'Ach, hör mir bloß auf... Ich war gestern auf der Schnellstraße unterwegs. Ich lief ganz normal meines Weges, als plötzlich völlig ohne Vorwarnung ein dicker Pilz direkt vor mir aus dem Boden geschossen ist! Ich konnte einfach unmöglich so schnell abbremsen!'" },
+            { id: 70, cat: "Gastronomie", text: "Ein Gast im Restaurant hat sein Schnitzel aufgegessen und winkt den Kellner zu sich. 'Herr Ober', sagt er unzufrieden, 'das Essen war zwar in Ordnung, aber das Schnitzel war ja wohl ein absoluter Witz. Das war so dünn, dass ich durch das Fleisch hindurch das Muster auf dem Teller lesen konnte!'\n\nDer Kellner verbeugt sich höflich und sagt lächelnd: 'Da sehen Sie mal, was für eine hervorragende Qualität unser Fleisch hat, mein Herr. Bei der Konkurrenz bekommen Sie meistens so dickes, minderwertiges Fleisch, da sehen Sie absolut gar nichts vom schönen Geschirr!'" },
+            { id: 71, cat: "Alltag", text: "Ein Mann kommt völlig aufgelöst in ein Fundbüro: 'Ich habe gestern in der Straßenbahn meine Brieftasche mit 500 Euro bar darin verloren! Hat sie vielleicht jemand abgegeben?'\n\nDer Beamte schaut in den Computer, nickt und sagt: 'Ja, tatsächlich! Ein ehrlicher Finder hat sie vorhin vorbeigebracht. Hier ist sie.'\n\nDer Mann öffnet die Brieftasche, zählt das Geld nach, schaut den Beamten stirnrunzelnd an und sagt: 'Sagen Sie mal... Das stimmt aber irgendetwas nicht. Gestern hatte ich einen glatten 500-Euro-Schein in der Geldbörse. Jetzt sind hier fünf Hunderter drin!'\n\nDer Beamte nickt lächelnd: 'Ach, das hat seine Richtigkeit. Der ehrliche Finder meinte nur, er hätte schon so oft Brieftaschen abgegeben, für die er am Ende keinen Finderlohn bekommen hat, weil der Besitzer angeblich *kein passendes Kleingeld* dabei hatte!'" },
+            { id: 72, cat: "Kneipe", text: "Ein Mann kommt in eine Kneipe, setzt sich an die Bar und ruft laut: 'Ein Bier für mich, ein Bier für den Barkeeper und ein Bier für jeden, der hier im Raum sitzt!'\n\nAlle jubeln, trinken gemütlich aus. Nach einer Stunde ruft der Mann wieder: 'Noch eine Runde! Ein Bier für mich, eins für den Barkeeper und eins für alle anderen!'\n\nAls es ans Bezahlen geht, schaut der Mann den Wirt unschuldig an: 'Ich habe übrigens keinen einzigen Cent dabei.'\n\nWütend packt der Barkeeper den Mann am Kragen, verprügelt ihn nach Strich und Faden und wirft ihn hochkant aus der Kneipe.\n\nAm nächsten Abend öffnet sich die Tür. Der Mann kommt wieder rein, setzt sich seelenruhig an die Bar und sagt: 'Ein Bier für mich und ein Bier für jeden, der hier im Raum sitzt!'\n\nDer Barkeeper schaut ihn grimmig an: 'Und was ist mit mir?! Kriege ich diesmal kein Bier?'\n\Der Mann schüttelt den Kopf: 'Nein, auf gar keinen Fall. Du wirst mir einfach viel zu aggressiv, wenn du Alkohol trinkst!'" },
+            { id: 73, cat: "Schule", text: "Die Lehrerin fragt die Klasse: 'Wenn auf einem Zaun fünf Vögel sitzen und ich schieße mit einem Gewehr einen davon herunter – wie viele Vögel sitzen dann noch auf dem Zaun?'\n\nDer kleine Fritzchen meldet sich sofort: 'Gar keiner mehr, Frau Lehrerin! Die anderen vier erschrecken sich durch den lauten Knall und fliegen sofort weg!'\n\nDie Lehrerin lächelt milde: 'Na ja, mathematisch gesehen ist die Antwort zwar falsch, aber ich mag deine Art zu denken.'\n\nFritzchen schaut sie an: 'Frau Lehrerin, jetzt habe ich aber mal eine Frage an Sie. In einem Eiscafé sitzen drei Frauen und essen ein Eis. Die erste leckt das Eis ganz vorsichtig von der Seite ab. Die zweite nimmt das Eis komplett in den Mund und saugt daran. Die dritte beißt direkt herzhaft oben in die Kugel rein. Welche von den dreien ist verheiratet?'\n\nDie Lehrerin läuft knallrot an, druckst herum und sagt schließlich ganz verlegen: 'Mhm... ich schätze... die zweite, die das Eis so im Mund hat?'\n\nFritzchen grinst breit: 'Nein, Frau Lehrerin! Diejenige, die einen Ehering am Finger trägt! Aber ich mag Ihre Art zu denken!'" },
+            { id: 74, cat: "Arzt", text: "Ein Mann kommt mit einem lebendigen Frosch auf dem Kopf zum Arzt. Der Arzt starrt das Phänomen fassungslos an und fragt schließlich völlig sprachlos: 'Um Himmels willen... wie ist es denn dazu bitteschön gekommen?'\n\nPlötzlich öffnet der Frosch den Mund und sagt mit tiefer Stimme: 'Ach Herr Doktor, hören Sie bloß auf... Das fing vor drei Tagen mit einer kleinen, harmlosen Warze an meinem Fuß an!'" },
+            { id: 75, cat: "Verkehr", text: "Ein Autofahrer wird wegen Schlangenlinien von der Polizei gestoppt. Der Polizist tritt ans Fenster, schaut streng und sagt: 'Guten Abend. Wir machen einen Alkoholtest. Pusten Sie bitte mal hier in das Röhrchen.'\n\nDer Fahrer schüttelt traurig den Kopf: 'Das kann ich leider nicht machen, Herr Wachtmeister. Ich habe schweres Asthma. Wenn ich da so fest reinpuste, bekomme ich sofort einen furchtbaren Erstickungsanfall!'\n\nPolizist: 'Gut, dann kommen Sie mit aufs Revier zur Blutabnahme.'\nFahrer: 'Geht auch nicht. Ich bin Bluter. Wenn Sie mich stechen, höre ich tagelang nicht mehr auf zu bluten!'\n\nPolizist: 'Na gut, dann steigen Sie einfach aus und gehen hier geradeaus auf der weißen Linie.'\n\nDer Fahrer seufzt tief: 'Das geht erst recht nicht, Herr Wachtmeister!'\n\nPolizist: 'Und warum bitteschön nicht?!'\n\nFahrer: 'Na, weil ich dafür viel zu betrunken bin!'" },
+            { id: 76, cat: "Ehe", text: "Ein Ehepaar sitzt beim Abendessen. Plötzlich schüttet sich die Frau versehentlich einen großen Löffel Tomatensoße direkt auf ihre weiße Seidenbluse. Sie schaut ganz entsetzt an sich herunter und ruft: 'Oh nein! Schau dir das an! Ich sehe aus wie ein furchtbares Schwein!'\n\nDer Ehemann blickt kurz von seinem Teller auf, nickt verständnisvoll und sagt ruhig: 'Ja, stimmt. Und die Soße hast du dir jetzt auch noch auf die Bluse gekleckert!'" },
+            { id: 77, cat: "Beruf", text: "Drei Architekten sitzen zusammen und unterhalten sich darüber, welches Gebäude sie am liebsten bauen würden.\n\nDer Erste sagt: 'Ich würde am liebsten ein riesiges, modernes Stadion bauen, in dem 100.000 Menschen Platz haben!'\n\nDer Zweite sagt: 'Ich würde am liebsten einen gigantischen Wolkenkratzer entwerfen, der bis in die Wolken reicht!'\n\nDer Dritte, der ein erfahrener Beamter im Bauamt ist, schüttelt den Kopf, lächelt weise und sagt: 'Ihr habt doch alle keine Ahnung... Ich würde am liebsten ein riesiges, rundes Bürogebäude entwerfen, das komplett aus Glas besteht.'\n\nDie anderen fragen verwirrt: 'Warum denn ausgerechnet rund und aus Glas?'\n\nEr grinst: 'Ganz einfach: Damit man mich von außen niemals in einer ungemütlichen Ecke sitzen sieht, und ich von innen schon zwei Stunden im Voraus erkenne, wenn ein nerviger Kunde auf das Gebäude zuläuft!'" },
+            { id: 78, cat: "Klassiker", text: "Zwei Ostfriesen wollen ein Bild an die Wand hängen. Der erste nimmt einen Nagel, setzt ihn mit dem Kopf an die Wand und will mit dem Hammer draufschlagen. Er hält inne, schaut ganz verwirrt und sagt zum anderen: 'Du, sag mal, der Nagel ist eine absolute Fehlkonstruktion! Die Spitze zeigt ja direkt zu mir und der Kopf zur Wand!'\n\nDer zweite Ostfriese schaut sich das Ganze eine Weile ganz genau an, schüttelt weise den Kopf und sagt: 'Mensch, du bist aber auch ein Dummkopf! Der Nagel ist doch völlig in Ordnung. Der ist schlicht und ergreifend für die gegenüberliegende Wand gedacht!'" },
+            { id: 79, cat: "Tiere", text: "Ein Hase und ein Bär gehen gemeinsam im Wald spazieren, als sie plötzlich eine magische Fee treffen. Die Fee lächelt und sagt: 'Ihr habt beide jeweils drei Wünsche frei, weil ihr mich aus dem Gebüsch befreit habt!'\n\nDer Bär überlegt nicht lange und brüllt als Erstes: 'Ich wünsche mir, dass alle Bären in diesem Wald außer mir bildschöne, weibliche Bären sind!' – *Puff*, der Wunsch ist erfüllt.\n\nDer Hase überlegt kurz und sagt: 'Ich wünsche mir einen coolen Motorradhelm.' – *Puff*, er hat einen Helm auf dem Kopf.\n\nDer Bär schaut den Hasen verständnislos an und wünscht sich seinen zweiten Wunsch: 'Ich wünsche mir, dass alle Bären im ganzen Land außer mir weiblich und wunderschön sind!' – *Puff*, erledigt.\n\nDer Hase sagt: 'Ich wünsche mir ein schnelles Mofa, passend zu meinem Helm.' – *Puff*, das Mofa steht vor ihm.\n\nNun kommt der jeweils letzte Wunsch. Der Bär holt tief Luft und strahlt: 'Ich wünsche mir, dass absolut alle Bären auf der ganzen Welt außer mir wunderschöne Frauen sind!' – *Puff*, der Wunsch wird wahr.\n\nDer Hase setzt sich auf sein Mofa, startet den Motor, schaut den Bären breit grinsend an und sagt zur Fee: 'Und ich wünsche mir... dass der dicke Bär da drüben ab heute komplett schwul ist!'... Er gibt Gas und saust davon." },
+            { id: 80, cat: "Gastronomie", text: "Ein Gast im Restaurant ruft den Kellner herbei: 'Herr Ober, mein Schnitzel ist ja winzig! Und das Besteck ist auch noch total dreckig!'\n\nDer Kellner seufzt genervt, schaut den Gast von oben bis unten an und sagt kühl: 'Mensch, mein Herr... Seien Sie doch froh, dass das Schnitzel so klein ist. Stellen Sie sich mal vor, wie lange Sie bei der Sauberkeit unseres Bestecks an einem großen Schnitzel herumzukauen hätten!'" },
+            { id: 81, cat: "Alltag", text: "Ein Mann kommt völlig verzweifelt in eine Zoohandlung: 'Ich brauche dringend Hilfe! Ich habe mir vor einer Woche bei Ihnen einen Papagei gekauft, aber der Vogel spricht absolut kein einziges Wort! Er sitzt nur stumm auf der Stange!'\n\nDer Verkäufer überlegt: 'Mhm, haben Sie ihm denn auch die kleine Spiegel-Leiter für den Käfig mitgenommen? Papageien sind eitel. Die klettern hoch, sehen sich im Spiegel und fangen vor Freude an zu quasseln!'\n\nDer Mann kauft die Leiter. Zwei Tage später kommt er wieder: 'Immer noch kein Wort.'\nDer Verkäufer: 'Kaufen Sie ihm die kleine Plastikglocke. Wenn er die läutet, spricht er garantiert!'\n\nDer Mann kauft die Glocke. Nach zwei Tagen stürzt er weinend in den Laden: 'Der Papagei ist heute Morgen gestorben!'\n\nDer Verkäufer ist geschockt: 'Oh nein! Das tut mir unendlich leid. Hat er denn vor seinem Tod wirklich überhaupt kein einziges Wort von sich gegeben?'\n\nDer Mann schluchzt: 'Doch... kurz bevor er von der Stange gekippt ist, hat er mich ganz schwach angesehen und geflüstert: *Sag mal... gab es in diesem verdammten Laden eigentlich nirgendwo auch nur ein winziges bisschen Vogelfutter zu kaufen?!*'" },
+            { id: 82, cat: "Kneipe", text: "Ein blinder Mann betritt eine Bar, tastet sich mühsam zum Tresen vor, setzt sich auf einen Barhocker und ruft laut zum Barkeeper: 'Hey Chef! Willst du mal einen richtig genialen, super lustigen Blondinen-Witz hören?'\n\nIn der gesamten Bar wird es schlagartig totenstill. Der Mann links neben ihm beugt sich zu ihm rüber und sagt mit tiefer, bedrohlicher Stimme: 'Freundchen, da du blind bist, will ich mal nett sein und dir fünf Dinge erklären, bevor du den Mund aufmachst:\nErstens: Der Barkeeper ist eine 1,90 Meter große Blondine.\nZweitens: Der Türsteher neben der Tür ist ein zweihundert Kilo schwerer Blondschopf.\nDrittens: Ich bin Kampfsportler und habe blonde Haare.\nViertens: Der Mann rechts von dir ist ein bewaffneter Polizist – ebenfalls blond.\nUnd fünftens: Hinter dir sitzen zwei Boxer mit blonden Haaren.\nÜberleg dir also ganz genau: Willst du diesen Witz jetzt immer noch erzählen?'\n\nDer blinde Mann schüttelt verständnislos den Kopf, seufzt tief und sagt genervt: 'Nee, auf gar keinen Fall... Wenn ich ihn gleich sechsmal hintereinander erklären muss, bis ihn hier drin jeder verstanden hat, ist mir das einfach viel zu anstrengend!'" },
+            { id: 83, cat: "Schule", text: "In der Schule fragt die Lehrerin die Klasse: 'Kinder, wer von euch kann mir denn sagen, was das Wort *Präzision* bedeutet?'\n\nDer kleine Fritzchen meldet sich sofort und sagt stolz: 'Das ist ganz einfach, Frau Lehrerin! Präzision ist, wenn mein Papa morgens um Punkt sieben Uhr das Haus verlässt, um sieben Uhr fünfzehn im Büro ankommt und um sieben Uhr dreißig bereits die erste halbe Stunde geschlafen hat!'" },
+            { id: 84, cat: "Arzt", text: "Ein Mann kommt völlig fertig zum Arzt: 'Herr Doktor, ich habe ein riesiges Problem. Ich rede seit Monaten jede Nacht im tiefsten Schlaf! Was kann ich bloß dagegen tun?'\n\nDer Arzt schaut ihn milde an und sagt: 'Na ja, medizinisch gesehen ist das eigentlich völlig harmlos. Das ist kein Grund zur Sorge.'\n\nDer Mann schreit fast: 'Harmlos?! Herr Doktor, Sie wissen ja gar nicht, was bei uns zu Hause los ist! Die ganze Abteilung im Büro lacht mich schon aus, weil meine Frau mir morgens beim Frühstück immer haarklein erzählt, was ich nachts für Geheimnisse ausgeplaudert habe!'\n\nDer Arzt überlegt kurz und sagt trocken: 'Mhm... In diesem Fall gibt es eine ganz einfache, bewährte Methode: Ich verschreibe Ihnen ab heute einfach ein hochwirksames Medikament, das dafür sorgt, dass Sie nachts absolut fest durchschlafen.'\n\nDer Mann schüttelt traurig den Kopf: 'Nein, das hilft mir nicht. Haben Sie denn nicht vielleicht eher ein Medikament, das dafür sorgt, dass meine Frau nachts endlich mal fest durchschläft?!'" },
+            { id: 85, cat: "Verkehr", text: "Ein junger Mann hat frisch seinen Führerschein bestanden und fährt das erste Mal stolz mit dem Auto seines Vaters durch die Stadt. Plötzlich sieht er am Straßenrand eine Nonne stehen, die den Daumen raushält und per Anhalter mitfahren möchte. Er bremst, lässt sie einsteigen und fährt weiter.\n\nNach ein paar Minuten verliert der junge Mann völlig die Beherrschung: Er fährt rechts ran, bremst scharf, schaut die Nonne wütend an und schreit: 'Es tut mir leid, Schwester! Aber ich kann einfach nicht anders... Ich muss Sie jetzt sofort küssen! Ich träume schon mein ganzes Leben davon, eine echte Nonne zu küssen!'\n\nDie Nonne schaut ihn ruhig an, lächelt milde und sagt: 'Nun gut, mein Sohn. Gegen einen Kuss habe ich eigentlich nichts einzuwenden. Aber unter zwei Bedingungen: Erstens musst du Single sein und zweitens musst du ein gläubiger, katholischer Mann sein.'\n\nDer junge Mann strahlt über das ganze Gesicht: 'Ja, das bin ich! Absolut! Ich schwöre es!'\n\nDie Nonne gibt ihm einen unglaublich leidenschaftlichen, langen Kuss. Der junge Mann ist völlig überwältigt, startet den Wagen und fährt tief gerührt weiter. Nach ein paar Kilometern bekommt er jedoch furchtbare Gewissensbisse, fängt an zu weinen und schluchzt: 'Schwester... ich habe Sie schrecklich angelogen! Ich bin überhaupt kein Katholik, ich bin überzeugter Atheist! Und Single bin ich auch nicht, ich bin seit drei Jahren fest verlobt! Bitte vergeben Sie mir!'\n\nDie Nonne lehnt sich ganz entspannt auf dem Beifahrersitz zurück, zündet sich eine Zigarette an, schaut aus dem Fenster und sagt mit tiefer Stimme: 'Ach, mach dir mal keine Sorgen, mein Sohn... Ich heiße in Wirklichkeit auch Stefan, bin auf dem Weg zu einer Faschingsparty und hatte schlichtweg keine Lust, die zehn Kilometer bis zur Halle zu Fuß zu laufen!'" },
+            { id: 86, cat: "Ehe", text: "Ein Ehepaar feiert seine Diamantene Hochzeit – 60 Jahre glücklich verheiratet. Beim festlichen Abendessen fragt der Ehemann seine Frau zärtlich: 'Sag mal, mein Schatz... Hand aufs Herz: In all den 60 Jahren, die wir nun durch dick und dünn gegangen sind... Hast du mich eigentlich jemals in deinem Leben betrogen?'\n\nDie Frau blickt verlegen auf ihren Teller, druckst herum und sagt leise: 'Ach Harald... Wenn du mich schon so direkt fragst... Ja, ich muss es gestehen. Ich habe dich in all den Jahren genau dreimal betrogen.'\n\nHarald schluckt schwer, ist sichtlich gekränkt, sagt aber gefasst: 'Gut... nach so einer langen Zeit will ich mal nicht so sein. Erzähl mir: Wann war denn das erste Mal?'\n\nSie seufzt: 'Erinnerst du dich noch an vor 55 Jahren, als du deine eigene Firma gründen wolltest und die Bank dir partout keinen Kredit geben wollte? Und plötzlich kam der Bankdirektor persönlich vorbei, hat den Vertrag unterschrieben und dir das Geld gegeben?'\n\nHarald nickt gerührt: 'Oh... das war für meine Karriere. Das hast du also für uns getan. Gut, das verzeihe ich dir. Und wann war das zweite Mal?'\n\nSie schaut auf: 'Erinnerst du dich an vor 30 Jahren, als du diese schwere Herzoperation brauchtest und kein einziger Chefarzt im Land Zeit hatte? Und plötzlich hat dich der absolute Top-Spezialist mitten in der Nacht umsonst operiert?'\n\nHarald wischt sich eine Träne aus dem Auge: 'Wahnsinn... Du hast mein Leben gerettet. Auch das sei dir von Herzen vergeben! Aber sag mir, Liebling: Wann war denn das dritte Mal?'\n\nDie Frau holt tief Luft, schaut ihn unschuldig an und sagt leise: 'Na ja... erinnerst du dich noch an vor fünf Jahren, als du unbedingt Vorsitzender im exklusiven Golfclub werden wolltest... und dir am Ende noch genau 42 Stimmen gefehlt haben?!'" },
+            { id: 87, cat: "Beruf", text: "Ein Zimmermann, ein Elektriker und ein Beamter sitzen zusammen in der Mittagspause und diskutieren darüber, wer von ihnen das beste und klügste Haustier besitzt.\n\nDer Zimmermann ruft stolz seinen Hund herbei: 'Axt, zeig mal, was du gelernt hast!' Der Hund läuft sofort zum Holzhaufen, holt ein paar Bretter, baut innerhalb von Minuten eine perfekte, stabile Hundehütte und setzt sich stolz davor. Die anderen nicken beeindruckt.\n\nAls Nächstes ist der Elektriker an der Reihe. Er ruft seinen Hund: 'Funke, du bist dran!' Der Hund läuft zum Schaltkasten, holt ein paar Kabel, verdrahtet eine Lampe fehlerfrei, drückt den Schalter mit der Pfote und das Licht brennt. Die Männer klatschen Beifall.\n\nSchließlich schauen alle den Beamten erwartungsvoll an. Der lächelt müde, nippt an seinem Kaffee und ruft ganz leise seinen Hund: 'Kaffeepause, komm mal her!'\n\nDer Hund steht gähnend auf, läuft zum Tisch, frisst die belegten Brote der beiden anderen Hunde auf, trinkt die Milch aus, kackt mitten in den Raum, reicht ein Formular für ein Burnout-Syndrom ein und geht für den Rest des Tages in den Feierabend!" },
+            { id: 88, cat: "Klassiker", text: "Drei Männer stehen vor der Himmelspforte. Petrus schaut sich die Akten an und sagt: 'Wir haben heute ein kleines Platzproblem im Himmel. Ich kann im Moment nur denjenigen reinlassen, der mir eine absolut unglaubliche, dramatische Geschichte über seinen Tod erzählen kann.'\n\nDer erste Mann tritt vor: 'Petrus, hör zu: Ich hatte schon länger den Verdacht, dass meine Frau mich betrügt. Heute bin ich überraschend früher von der Arbeit nach Hause gekommen, stürme in unsere Wohnung im 15. Stock – aber sie lag völlig allein im Bett! Ich habe überall gesucht. Schließlich gehe ich auf den Balkon und sehe tatsächlich einen fremden Mann, der sich von außen mit den Händen an der Kante festhält! Ich war so wütend, dass ich wie wild mit dem Hammer auf seine Finger eingeschlagen habe. Er stürzt ab – landet aber wie durch ein Wunder genau in einem dicken Gebüsch im Erdgeschoss und lebt noch! Vor lauter Wut habe ich unseren riesigen, tonnenschweren Kühlschrank gepackt und über das Geländer gekippt. Der Kühlschrank hat ihn erschlagen! Aber durch die extreme Anstrengung habe ich sofort einen tödlichen Herzinfarkt bekommen!'\n\nPetrus schüttelt den Kopf: 'Dramatisch! Du darfst rein.'\n\nDer zweite Mann tritt vor: 'Petrus, du glaubst es nicht: Ich bin Fensterputzer. Ich war heute im 16. Stock an einem Hochhaus beschäftigt, verliere das Gleichgewicht und stürze in die Tiefe! Zum Glück konnte ich mich im Fliegen einen Stock tiefer mit den Händen an einer Balkonkante festhalten und dachte, ich sei gerettet! Doch plötzlich kommt ein völlig Irrer auf den Balkon gestürmt und schlägt wie ein Wahnsinniger mit dem Hammer auf meine Finger ein! Ich stürze ab, lande in einem Gebüsch und lebe immer noch! Ich wollte gerade aufstehen... da kommt von oben ein riesiger Kühlschrank geflogen und erschlägt mich!'\n\nPetrus lacht: 'Unglaublich! Auch du darfst rein.'\n\nSchließlich tritt der dritte Mann vor, schaut Petrus mit großen Augen an und sagt leise: 'Petrus, mach's kurz: Stell dir einfach vor, du sitzt splitterfasert nackt in einem dicken Kühlschrank... und plötzlich wird das Ding aus dem 15. Stock geworfen!'" },
+            { id: 89, cat: "Tiere", text: "Ein stolzer Löwe geht durch die Savanne und will seine Macht demonstrieren. Er trifft einen kleinen Affen, packt ihn am Kragen, fletscht die Zähne und brüllt: 'Wer ist der absolute König aller Tiere im gesamten Dschungel?!'\n\nDer Affe zittert am ganzen Körper und piepst: 'Du natürlich, mächtiger Löwe! Wer denn sonst!' Der Löwe lächelt zufrieden und lässt ihn laufen.\n\nAls Nächstes trifft er eine Giraffe. Er stellt sich ihr in den Weg und brüllt: 'Wer ist das mächtigste Lebewesen auf dieser Welt?!'\n\nDie Giraffe guckt ganz erschrocken und stammelt: 'Oh, das bist ganz eindeutig du, großer Löwe!' Der Löwe klopft sich auf die Brust und geht weiter.\n\nSchließlich trifft er auf einen riesigen, tonnenschweren Elefantenbullen, der seelenruhig an einem Baum knabbert. Der Löwe baut sich vor ihm auf, holt tief Luft und brüllt aus vollem Hals: 'Hey du grauer Riese! Wer ist der absolute Herrscher und unschlagbare König der afrikanischen Wildnis?!'\n\nDer Elefant schaut nicht mal richtig hin, schlingt einfach seinen Rüssel um den Löwen, wirbelt ihn dreimal im Kreis durch die Luft, schmettert ihn mit voller Wucht gegen einen dicken Felsen und tritt im Vorbeigehen noch mal ganz locker mit dem Fuß auf ihn drauf.\n\nDer Löwe liegt völlig ramponiert im Staub, spuckt Blut, rappelt sich mühsam auf, wischt sich den Dreck aus den Augen und ruft dem Elefanten hinterher: 'Mensch, man wird ja wohl noch eine ganz normale Frage stellen dürfen, ohne dass du hier gleich völlig ausrastest!'" },
+            { id: 90, cat: "Gastronomie", text: "Ein Gast sitzt in einer gemütlichen Dorfkneipe und bestellt ein Jägerschnitzel mit Pommes. Als das Essen kommt, traut er seinen Augen nicht: Auf dem Teller liegt ein winziges Schnitzel, das kaum größer ist als eine Euro-Münze, umringt von genau drei Pommes.\n\nDer Gast ruft den Wirt völlig fassungslos an den Tisch: 'Sagen Sie mal, Herr Wirt! Was ist das denn bitteschön für eine unverschämte Portion?! Davon wird doch nicht mal eine Maus satt! Ich verlange sofort eine Erklärung!'\n\nDer Wirt beugt sich diskret zu ihm herunter, schaut sich nervös um und flüstert leise: 'Pst, machen Sie bloß nicht so einen Lärm! Wir haben heute eine schwere Kontrolle vom Gewerbeamt im Haus. Und wenn die Gauner spitzkriegen, dass ich Ihnen aus Versehen die normale Portion für unsere Privatgäste serviert habe, sperren die mir morgen den ganzen Laden zu!'" },
+            { id: 91, cat: "Alltag", text: "Ein Mann geht in eine Bank, geht zum Schalter und sagt ganz höflich zum Angestellten: 'Guten Tag. Ich möchte bitte ein Girokonto für meine Katze einrichten.'\n\nDer Bankangestellte starrt ihn fassungslos an, schüttelt den Kopf und sagt: 'Sagen Sie mal, wollen Sie mich auf den Arm nehmen?! Eine Katze kann doch kein Bankkonto eröffnen! Tiere sind rechtlich gesehen gar nicht geschäftsfähig! Wie soll das denn bitteschön funktionieren?'\n\nDer Mann holt ein dickes Bündel 500-Euro-Scheine aus der Tasche, legt es auf den Tresen und sagt ruhig: 'Meine Katze hat geerbt. Es geht um genau drei Millionen Euro bar auf die Hand.'\n\nDer Bankangestellte wird schlagartig blass, schluckt schwer, tippt wie wild auf seiner Tastatur herum, schaut den Mann mit einem breiten, professionellen Grinsen an und fragt zuckersüß: 'Sehr gerne, mein Herr! Und soll die kleine Miezekatze denn auch direkt eine goldene Kreditkarte mit persönlicher Pfoten-Prägung dazu bekommen, oder reicht ihr für den Anfang erst mal das normale Online-Banking mit Katzenminze-Flatrate?!'" },
+            { id: 92, cat: "Kneipe", text: "Ein Mann kommt völlig deprimiert in eine Bar, setzt sich an den Tresen und bestellt beim Barkeeper zehn Gläser edlen Whisky auf einmal. Er fängt an, die Gläser im Sekundentakt nacheinander in einem Zug leerzutrinken.\n\nDer Barkeeper schaut entsetzt zu und sagt nach dem siebten Glas bewundernd: 'Mensch, Kollege! Sie schütten den teuren Schnaps ja in einem Tempo runter, das habe ich noch nie erlebt! Darf ich fragen, was es da bitteschön zu feiern gibt?'\n\nDer Mann wischt sich den Mund ab, schaut den Wirt traurig an und lallt: 'Ich feiere... meinen ersten... oralen... Vorfall... im Leben.'\n\nDer Barkeeper strahlt über das ganze Gesicht, klopft ihm auf die Schulter und ruft begeistert: 'Mensch, das ist ja fantastisch! Herzlichen Glückwunsch! Weißt du was? Das achte Glas geht komplett auf Kosten des Hauses!'\n\nDer Mann schüttelt traurig den Kopf, schiebt das Glas beiseite und flüstert: 'Nee, lass mal stecken, Chef... Wenn der Geschmack nach den ersten sieben Gläsern reinem Whisky immer noch nicht aus dem Mund verschwunden ist, hilft das achte Glas jetzt ehrlich gesagt auch nicht mehr weiter!'" },
+            { id: 93, cat: "Schule", text: "In der Schule fragt die Lehrerin im Deutschunterricht nach Beispielen für Wörter, die man sowohl vorwärts als auch rückwärts genau gleich liest – sogenannte *Palindrome*.\n\nLisa meldet sich: 'ANNA, Frau Lehrerin!'\nMax meldet sich: 'OTTO, Frau Lehrerin!'\n\nDer kleine Fritzchen im Hintergrund springt wild auf seinem Stuhl herum, meldet sich mit beiden Händen und ruft laut: 'Frau Lehrerin! Ich habe das absolut längste und genialste Palindrom der ganzen Welt!'\n\nDie Lehrerin schaut skeptisch: 'Na da bin ich aber mal gespannt, Fritzchen. Welches Wort soll das denn bitteschön sein?'\n\nFritzchen ruft stolz: 'GUTEN MORGEN, FRAU LEHRERIN!'\n\nDie Lehrerin schüttelt den Kopf: 'Aber Fritzchen, das ist doch völlig falsch! Wenn man das rückwärts liest, ergibt das doch überhaupt keinen Sinn!'\n\nFritzchen grinst breit: 'Na und?! Wenn Sie uns morgens um acht Uhr begrüßen, ergibt das für uns doch meistens auch absolut keinen Sinn!'" },
+            { id: 94, cat: "Arzt", text: "Ein Mann kommt mit einem dicken Verband um das rechte Bein zum Arzt gehumpelt. Der Arzt fragt besorgt: 'Mensch, Herr Schmidt, was ist Ihnen denn passiert?'\n\nHerr Schmidt stöhnt: 'Ach Herr Doktor, das verdanke ich meinem neuen Hobby. Ich habe letzte Woche mit dem Reiten angefangen.'\n\nDer Arzt nickt verständnisvoll: 'Ah, ein klassischer Sturz vom Pferd. Das passiert Anfängern leider öfter.'\n\nHerr Schmidt schüttelt den Kopf: 'Nein, das ist es ja gerade... Ich bin überhaupt nicht vom Pferd gestürzt.'\n\nDer Arzt schaut verwirrt: 'Wie haben Sie sich denn dann diese schwere Verletzung am Bein zugezogen?'\n\nHerr Schmidt seufzt tief: 'Ganz einfach: Das Pferd stand an einer roten Ampel, ich wollte im Eifer des Gefechts vorschriftsmäßig den Blinker setzen... und habe dabei aus Versehen mit voller Wucht der Pferdefliege direkt ins Auge gestochen!'" },
+            { id: 95, cat: "Verkehr", text: "Ein Lkw-Fahrer wird mitten in der Nacht von einer Polizeistreife auf der Landstraße angehalten. Der Polizist leuchtet mit der Taschenlampe ins Fahrerhaus und sagt streng: 'Guten Abend. Wir haben Sie nun schon seit drei Kilometern beobachtet. Sie halten an absolut jeder Kreuzung an, steigen aus, rennen wie wild um Ihren Lkw herum, schlagen mit einem dicken Holzknüppel gegen die Plane und steigen wieder ein! Können Sie mir mal verraten, was dieser absolute Blödsinn bitteschön bedeuten soll?!'\n\nDer Lkw-Fahrer wischt sich den Schweiß von der Stirn, schaut den Polizisten völlig fertig an und flüstert verzweifelt: 'Herr Wachtmeister, ich kann nicht anders! Ich fahre einen kleinen 3,5-Tonner. Ich habe aber hinten auf der Ladefläche genau sechs Tonnen lebendige Kanarienvögel geladen! Wenn ich nicht an jeder Ecke dafür sorge, dass mindestens die Hälfte von den kleinen Biestern permanent aufgeregt durch die Gegend fliegt, bricht mir auf der Stelle die ganze Achse durch!'" },
+            { id: 96, cat: "Ehe", text: "Ein Ehemann kommt nach einem langen Arbeitstag nach Hause, geht ins Wohnzimmer und sieht seine Frau, die weinend auf dem Sofa sitzt und ein Taschentuch zerfetzt. 'Was ist denn los, mein Schatz?', fragt er besorgt.\n\nSie schluchzt: 'Ach, es ist schrecklich... Deine Mutter hat mich heute angerufen und mich am Telefon aufs Übelste beschimpft und beleidigt! Sie war unendlich gemein zu mir!'\n\nDer Ehemann stutzt, schaut ganz verwirrt auf die Uhr und sagt nachdenklich: 'Mhm... das ist aber wirklich seltsam. Meine Mutter ist doch schon seit drei Wochen im Urlaub auf Mallorca und hat dort laut ihrer Aussage überhaupt kein Handynetz...'\n\nDie Ehefrau schnieft, blickt kurz auf und sagt leise: 'Ja, das stimmt schon... Aber sie hat mir vorhin eine Postkarte geschrieben, und ich habe mir den Text beim Durchlesen einfach mit ihrer furchtbaren Stimme im Kopf vorgestellt!'" },
+            { id: 97, cat: "Beruf", text: "Ein junger, ehrgeiziger Anwalt hat frisch seine eigene, edle Kanzlei in der Innenstadt eröffnet. Er sitzt stolz hinter seinem riesigen Schreibtisch aus Mahagoni, als er plötzlich Schritte im Flur hört. Ein potenzieller Kunde! Um unheimlich wichtig und beschäftigt zu wirken, greift er sofort zum Hörer seines Telefons, hält es ans Ohr und fängt lautstark an zu reden:\n\n'Ja, Herr Direktor! Gar kein Problem! Ich habe das Plädoyer für den Millionen-Prozess vor dem Bundesgerichtshof komplett fertig! Die Gegenseite hat absolut keine Chance gegen uns! Ich vertrete Sie da persönlich, machen Sie sich keine Sorgen! Gut, wir sprechen uns morgen. Auf Wiederhören!'\n\nEr legt den Hörer stolz auf die Gabel, blickt mit einem arroganten Lächeln auf den Mann, der in der Tür steht, und fragt geschäftsmäßig: 'So, mein Herr! Was kann ich für Sie tun?'\n\nDer Mann kratzt sich verlegen am Kopf und sagt leise: 'Ach, eigentlich gar nichts... Ich bin von der Telekom und wollte nur kurz Ihr Telefon anschließen, weil das Kabel noch hier draußen im Flur liegt!'" },
+            { id: 98, cat: "Klassiker", text: "Zwei Männer fliegen in einem Heißluftballon über eine vollkommen unbekannte Landschaft. Plötzlich zieht dichter Nebel auf, sie verlieren komplett die Orientierung und treiben stundenlang hilflos umher. Schließlich reißt die Wolkendecke kurz auf und sie sehen weit unter sich einen Mann auf einer Wiese stehen.\n\nDer erste Ballonfahrer lehnt sich weit über den Korb und schreit aus vollem Hals nach unten: 'Hallo! Können Sie uns bitte helfen?! Wo befinden wir uns hier eigentlich?!'\n\nDer Mann auf der Wiese schaut nach oben, überlegt lange und gründlich, legt den Kopf schief und ruft schließlich laut zurück: 'Hallo! Sie befinden sich in einem Korb von einem Heißluftballon und schweben ungefähr zwanzig Meter über der Erde!'\n\nKurz darauf zieht der Nebel wieder zu und der Mann ist verschwunden.\n\nDer zweite Ballonfahrer schaut seinen Kollegen an und sagt seufzend: 'Das war ganz eindeutig ein IT-Unternehmensberater.'\n\nDer erste fragt erstaunt: 'Wahnsinn! Wie konntest du das denn aus der Entfernung so schnell herausfinden?'\n\n'Ganz einfach', sagt der zweite: 'Seine Antwort kam unheimlich spät, sie war mathematisch und sachlich zu einhundert Prozent korrekt – aber sie ist für uns im Moment schlicht und ergreifend absolut nutzlos!'" },
+            { id: 99, cat: "Tiere", text: "Ein kleiner Hase hoppelt gemütlich durch den Wald, als er plötzlich ein großes Loch im Boden sieht. Er schaut neugierig hinein – und tatsächlich: Der dicke Fuchs ist in die Falle getappt und kommt von alleine nicht mehr heraus! Der Fuchs schaut den Hasen mit großen, traurigen Augen an und fleht: 'Lieber Hase, bitte hilf mir! Wenn du mich hier rausholst, schwöre ich dir bei allem, was mir wichtig ist, dass ich dich mein ganzes Leben lang nie wieder jagen werde!'\n\nDer Hase grinst breit, zuckt mit den Achseln und sagt cool: 'Nee, lass mal stecken, Kumpel. Das Risiko ist mir einfach viel zu groß.' Er dreht sich um und hoppelt fröhlich pfeifend weiter.\n\nZwei Stunden später bekommt der Hase jedoch ein schlechtes Gewissen, kehrt um und sieht, dass der Fuchs immer noch im Loch sitzt. 'Na gut', sagt der Hase, 'ich will mal nicht so sein.' Er bindet das Seil von seinem kleinen Mofa fest an einen Baum, wirft das andere Ende in das Loch, gibt ordentlich Gas und zieht den Fuchs glücklich nach oben.\n\nDer Fuchs ist unendlich dankbar, fällt dem Hasen um den Hals, hält sein Versprechen und geht friedlich seiner Wege.\n\nEin halbes Jahr später wendet sich das Blatt: Der Hase rennt unaufmerksam durch das Gebüsch und stürzt mitten in dasselbe Loch hinein! Er kommt nicht mehr heraus. Nach einer Stunde läuft zufällig der Fuchs am Loch vorbei, sieht den Hasen und ruft erschrocken: 'Mensch, kleiner Hase! Keine Sorge, ich helfe dir sofort!'\n\nDer Fuchs hat allerdings kein Mofa dabei. Er legt sich einfach flach auf den Bauch, lässt seinen langen, buschigen Schwanz tief in das Loch hinunterhängen und sagt: 'Hier, klammer dich fest!' Der Hase packt den Schwanz, der Fuchs zieht kräftig an und der Hase ist gerettet!\n\nUnd die Moral von der Geschicht'?! Ganz einfach: Wer einen schönen, langen, flauschigen Fuchsschwanz besitzt... braucht sich im Leben wirklich überhaupt kein Mofa zu kaufen!" },
+            { id: 100, cat: "Erkenntnis", text: "Herzlichen Glückwunsch! Du hast das absolute Ende der 100 echten Witze erreicht. Du hast jetzt offiziell den ultimativen Humor-Ausweis bestanden. Wenn du auf das Zahnrad oben rechts klickst, wird der Speicher geleert und du kannst die Geschichten deinen Freunden noch mal von vorne erzählen!" }
+        ];
+
+        let currentRotation = 0;
+        const btn = document.getElementById('spinBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const wheel = document.getElementById('luckyWheel');
+        const categoryBadge = document.getElementById('categoryBadge');
+        const jokeText = document.getElementById('jokeText');
+        const counterDisplay = document.getElementById('counterDisplay');
+
+        function getSeenJokes() {
+            const seen = localStorage.getItem('cocos_seen_jokes');
+            return seen ? JSON.parse(seen) : [];
+        }
+
+        function saveSeenJoke(id) {
+            const seen = getSeenJokes();
+            if (!seen.includes(id)) {
+                seen.push(id);
+                localStorage.setItem('cocos_seen_jokes', JSON.stringify(seen));
             }
-
-            function saveSeenJoke(id) {
-                const seen = getSeenJokes();
-                if (!seen.includes(id)) {
-                    seen.push(id);
-                    localStorage.setItem('cocos_seen_jokes', JSON.stringify(seen));
-                }
-                updateCounter();
-            }
-
-            function updateCounter() {
-                const seenCount = getSeenJokes().length;
-                counterDisplay.innerText = `${seenCount} / 100 Witze gesehen`;
-            }
-
-            function createGlitterRain() {
-                const colors = ['#f49ac2', '#fbcce7', '#d4af37', '#ffffff', '#ffb6c1'];
-                const shapes = ['50%', '0%'];
-                
-                for (let i = 0; i < 45; i++) {
-                    const glitter = document.createElement('div');
-                    glitter.classList.add('glitter');
-                    
-                    glitter.style.left = Math.random() * 100 + 'vw';
-                    glitter.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    glitter.style.borderRadius = shapes[Math.floor(Math.random() * shapes.length)];
-                    
-                    const size = Math.random() * 6 + 6;
-                    glitter.style.width = `${size}px`;
-                    glitter.style.height = `${size}px`;
-                    
-                    glitter.style.animationDuration = Math.random() * 2 + 1.5 + 's';
-                    glitter.style.animationDelay = Math.random() * 0.4 + 's';
-                    
-                    document.body.appendChild(glitter);
-                    
-                    glitter.addEventListener('animationend', () => {
-                        glitter.remove();
-                    });
-                }
-            }
-
-            btn.addEventListener('click', () => {
-                const seenJokes = getSeenJokes();
-                const availableJokes = jokesDatabase.filter(joke => !seenJokes.includes(joke.id));
-
-                if (availableJokes.length === 0) {
-                    categoryBadge.innerText = "Wow!";
-                    jokeText.innerText = "Du hast alle 100 Witze gesehen! Der Verlauf wird jetzt automatisch zurückgesetzt, damit du von vorne starten kannst.";
-                    localStorage.removeItem('cocos_seen_jokes');
-                    updateCounter();
-                    return;
-                }
-
-                btn.disabled = true;
-                const randomJoke = availableJokes[Math.floor(Math.random() * availableJokes.length)];
-
-                const addedRotation = 1080 + Math.floor(Math.random() * 360);
-                currentRotation += addedRotation;
-                wheel.style.transform = `rotate(${currentRotation}deg)`;
-
-                setTimeout(() => {
-                    categoryBadge.innerText = randomJoke.cat;
-                    jokeText.innerText = randomJoke.text;
-                    
-                    saveSeenJoke(randomJoke.id);
-                    createGlitterRain();
-                    btn.disabled = false;
-                }, 3000);
-            });
-
-            clearBtn.addEventListener('click', () => {
-                if (confirm("Möchtest du deinen Witz-Verlauf wirklich zurücksetzen?")) {
-                    localStorage.removeItem('cocos_seen_jokes');
-                    updateCounter();
-                    categoryBadge.innerText = "Reset";
-                    jokeText.innerText = "Verlauf gelöscht! Alle 100 Witze sind wieder im Lostopf.";
-                }
-            });
-
             updateCounter();
-        </script>
-    </body>
-    </html>
+        }
+
+        function updateCounter() {
+            const seenCount = getSeenJokes().length;
+            counterDisplay.innerText = `${seenCount} / 100 Witze gesehen`;
+        }
+
+        function createGlitterRain() {
+            const colors = ['#f49ac2', '#fbcce7', '#d4af37', '#ffffff', '#ffb6c1'];
+            const shapes = ['50%', '0%'];
+            
+            for (let i = 0; i < 45; i++) {
+                const glitter = document.createElement('div');
+                glitter.classList.add('glitter');
+                
+                glitter.style.left = Math.random() * 100 + 'vw';
+                glitter.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                glitter.style.borderRadius = shapes[Math.floor(Math.random() * shapes.length)];
+                
+                const size = Math.random() * 6 + 6;
+                glitter.style.width = `${size}px`;
+                glitter.style.height = `${size}px`;
+                
+                glitter.style.animationDuration = Math.random() * 2 + 1.5 + 's';
+                glitter.style.animationDelay = Math.random() * 0.4 + 's';
+                
+                document.body.appendChild(glitter);
+                
+                glitter.addEventListener('animationend', () => {
+                    glitter.remove();
+                });
+            }
+        }
+
+        btn.addEventListener('click', () => {
+            const seenJokes = getSeenJokes();
+            const availableJokes = jokesDatabase.filter(joke => !seenJokes.includes(joke.id));
+
+            if (availableJokes.length === 0) {
+                categoryBadge.innerText = "Wow!";
+                jokeText.innerText = "Du hast alle 100 Witze gesehen! Der Verlauf wird jetzt automatisch zurückgesetzt, damit du von vorne starten kannst.";
+                jokeText.style.textAlign = "center";
+                localStorage.removeItem('cocos_seen_jokes');
+                updateCounter();
+                return;
+            }
+
+            btn.disabled = true;
+            const randomJoke = availableJokes[Math.floor(Math.random() * availableJokes.length)];
+
+            const addedRotation = 1080 + Math.floor(Math.random() * 360);
+            currentRotation += addedRotation;
+            wheel.style.transform = `rotate(${currentRotation}deg)`;
+
+            setTimeout(() => {
+                categoryBadge.innerText = randomJoke.cat;
+                jokeText.innerText = randomJoke.text;
+                jokeText.style.textAlign = "left"; // Linksbündig für besseren Lesefluss bei Geschichten
+                
+                saveSeenJoke(randomJoke.id);
+                createGlitterRain();
+                btn.disabled = false;
+            }, 3000);
+        });
+
+        clearBtn.addEventListener('click', () => {
+            if (confirm("Möchtest du deinen Witz-Verlauf wirklich zurücksetzen?")) {
+                localStorage.removeItem('cocos_seen_jokes');
+                updateCounter();
+                categoryBadge.innerText = "Reset";
+                jokeText.innerText = "Verlauf gelöscht! Alle 100 Witze sind wieder im Lostopf.";
+                jokeText.style.textAlign = "center";
+            }
+        });
+
+        updateCounter();
+    </script>
+</body>
+</html>
